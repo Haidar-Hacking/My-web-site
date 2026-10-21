@@ -1,0 +1,54 @@
+# Builds an unsigned iPhone IPA on GitHub's Mac servers, for sideloading (Sideloadly / AltStore sign it with your own Apple ID).
+name: Build iPhone IPA
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  ipa:
+    runs-on: macos-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install packages
+        run: |
+          npm install --no-audit --no-fund
+          npx expo install react react-native react-native-webview @react-native-async-storage/async-storage react-native-svg react-native-safe-area-context expo-linear-gradient expo-haptics expo-clipboard expo-speech expo-status-bar expo-splash-screen expo-build-properties
+
+      - name: Generate the iPhone project
+        run: npx expo prebuild --platform ios
+
+      - name: Build (unsigned)
+        working-directory: ios
+        run: |
+          WS=$(ls -d *.xcworkspace | head -1)
+          SCHEME="${WS%.xcworkspace}"
+          xcodebuild -workspace "$WS" -scheme "$SCHEME" -configuration Release -sdk iphoneos \
+            -derivedDataPath build -destination 'generic/platform=iOS' \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" build | tail -40
+
+      - name: Package the IPA
+        run: |
+          mkdir -p Payload
+          cp -R ios/build/Build/Products/Release-iphoneos/*.app Payload/
+          zip -qry GB-Browser.ipa Payload
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: GB-Browser-ipa
+          path: GB-Browser.ipa
+
+      - name: Publish under Releases
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ipa-${{ github.run_number }}
+          name: GB Browser IPA ${{ github.run_number }}
+          files: GB-Browser.ipa
