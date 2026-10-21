@@ -1,0 +1,86 @@
+// نصوص الواجهة بالعربي والإنكليزي
+const ar = {
+  searchPlaceholder: 'ابحث أو اكتب عنوان موقع',
+  back: 'رجوع', forward: 'تقدّم', reload: 'تحديث', stop: 'إيقاف', share: 'مشاركة', tabs: 'تبويبات', menu: 'القائمة',
+  shield: 'الدرع', close: 'إغلاق', cancel: 'إلغاء', done: 'تم', clear: 'مسح', remove: 'حذف', removed: 'انحذف',
+  undo: 'تراجع', copy: 'نسخ', copied: 'انسخ ✓', retry: 'حاول مرة ثانية', recent: 'زرتها مؤخراً',
+  typeToSearch: 'اكتب أي شي تريده', searchOn: 'بحث في {0}', searchWith: '{0}', switchToTab: 'روح للتبويب',
+  newTab: 'تبويب جديد', privateTab: 'تبويب خاص', newPrivateTab: 'تبويب خاص جديد', private: 'خاص',
+  closeTab: 'سكّر التبويب', closeAll: 'سكّر الكل', noTabs: 'ماكو تبويبات مفتوحة', noPrivateTabs: 'ماكو تبويبات خاصة.\nاللي تفتحه هنا ما ينحفظ بالسجل.',
+  tabClosed: 'تسكّر التبويب', allClosed: 'تسكّرت كل التبويبات', privateClosed: 'تسكّرت التبويبات الخاصة',
+  bookmark: 'مفضلة', bookmarked: 'بالمفضلة', bookmarks: 'المفضلة', history: 'السجل', readLater: 'اقرأ لاحقاً',
+  copyLink: 'نسخ الرابط', findInPage: 'بحث بالصفحة', reader: 'وضع القراءة', desktopSite: 'نسخة الكمبيوتر', addToStart: 'للبداية',
+  darkSites: 'المواقع بالوضع الداكن', textSize: 'حجم الخط', settings: 'الإعدادات', library: 'المكتبة',
+  bookmarkAdded: 'انضاف للمفضلة ★', bookmarkRemoved: 'انشال من المفضلة', readLaterAdded: 'انحفظ تقراه بعدين', readLaterRemoved: 'انشال من قائمة القراءة',
+  linkCopied: 'انسخ الرابط', desktopOn: 'هسه تشوف نسخة الكمبيوتر', desktopOff: 'رجعت لنسخة الموبايل',
+  pinned: 'انضاف لصفحة البداية', unpinned: 'انشال من صفحة البداية', pinFull: 'صفحة البداية مليانة (١٢ موقع)',
+  noArticle: 'هذي الصفحة ما بيها مقال للقراءة', cantOpen: 'ماكو تطبيق يفتح هذا الرابط',
+  listen: 'اسمع', listening: 'دا أقرالك المقال…', minRead: '{0} دقيقة قراءة', font: 'نوع الخط',
+  errTitle: 'ما انفتحت الصفحة', errText: 'تأكد من الإنترنت أو من العنوان وجرّب مرة ثانية.',
+  today: 'اليوم', yesterday: 'البارحة', searchIn: 'ابحث في {0}', noResults: 'ماكو نتائج',
+  'empty.bookmarks': 'ماكو مفضلة بعد.\nاضغط ★ من القائمة حتى تضيف.', 'empty.history': 'السجل فارغ', 'empty.readLater': 'ماكو شي محفوظ للقراءة',
+  clearHistory: 'مسح السجل', clearHistoryQ: 'تريد تمسح كل السجل؟', historyCleared: 'انمسح السجل',
+  shieldPage: 'إعلان ومتتبّع انحجب بهذي الصفحة', shieldOffHere: 'الدرع طافي لهذا الموقع', shieldSite: 'الحماية لهذا الموقع',
+  shieldDisabled: 'الدرع طافي من الإعدادات', shieldOnFor: 'شغّلنا الدرع لـ {0}', shieldOffFor: 'طفّينا الدرع لـ {0}',
+  blockedCount: '{0} إعلان ومتتبّع انحجب لحد هسه',
+  version: 'الإصدار {0}',
+  'private.title': 'تصفّح خاص',
+  'private.text': 'الصفحات اللي تفتحها هنا ما تنحفظ بالسجل، وتنمسح بياناتها من تسكّر التبويب.',
+  'ntp.morning': 'صباح الخير', 'ntp.afternoon': 'نهارك سعيد', 'ntp.evening': 'مساء الخير',
+  'wx.clear': 'صافي', 'wx.partly': 'غائم جزئياً', 'wx.cloudy': 'غائم', 'wx.fog': 'ضباب', 'wx.drizzle': 'رذاذ',
+  'wx.rain': 'مطر', 'wx.snow': 'ثلج', 'wx.showers': 'زخات مطر', 'wx.storm': 'عاصفة رعدية',
+  'set.general': 'عام', 'set.language': 'اللغة', 'set.theme': 'المظهر', 'set.auto': 'تلقائي', 'set.light': 'فاتح', 'set.dark': 'داكن',
+  'set.accent': 'اللون', 'set.digits': 'الأرقام', 'set.search': 'البحث', 'set.suggestions': 'اقتراحات البحث',
+  'set.suggestionsSub': 'تنطفي تلقائياً بالتبويب الخاص', 'set.privacy': 'الخصوصية والدرع', 'set.shield': 'درع الإعلانات والتتبّع',
+  'set.popups': 'منع النوافذ المنبثقة', 'set.allowed': 'الدرع طافي لهذا الموقع', 'set.start': 'صفحة البداية',
+  'set.weather': 'الطقس', 'set.city': 'المدينة', 'set.wisdom': 'حكمة اليوم', 'set.shortcuts': 'المواقع بصفحة البداية',
+  'set.other': 'أخرى', 'set.haptics': 'اهتزاز خفيف عند اللمس',
+};
+
+const en = {
+  searchPlaceholder: 'Search or type a web address',
+  back: 'Back', forward: 'Forward', reload: 'Reload', stop: 'Stop', share: 'Share', tabs: 'Tabs', menu: 'Menu',
+  shield: 'Shield', close: 'Close', cancel: 'Cancel', done: 'Done', clear: 'Clear', remove: 'Remove', removed: 'Removed',
+  undo: 'Undo', copy: 'Copy', copied: 'Copied ✓', retry: 'Try again', recent: 'Recently visited',
+  typeToSearch: 'Type anything', searchOn: 'Search {0}', searchWith: '{0}', switchToTab: 'Switch to tab',
+  newTab: 'New tab', privateTab: 'Private tab', newPrivateTab: 'New private tab', private: 'Private',
+  closeTab: 'Close tab', closeAll: 'Close all', noTabs: 'No open tabs', noPrivateTabs: 'No private tabs.\nNothing you open here is saved to history.',
+  tabClosed: 'Tab closed', allClosed: 'All tabs closed', privateClosed: 'Private tabs closed',
+  bookmark: 'Bookmark', bookmarked: 'Bookmarked', bookmarks: 'Bookmarks', history: 'History', readLater: 'Read later',
+  copyLink: 'Copy link', findInPage: 'Find in page', reader: 'Reader', desktopSite: 'Desktop site', addToStart: 'Add to start',
+  darkSites: 'Dark mode for sites', textSize: 'Text size', settings: 'Settings', library: 'Library',
+  bookmarkAdded: 'Added to bookmarks ★', bookmarkRemoved: 'Removed from bookmarks', readLaterAdded: 'Saved to read later', readLaterRemoved: 'Removed from read later',
+  linkCopied: 'Link copied', desktopOn: 'Showing the desktop site', desktopOff: 'Back to the mobile site',
+  pinned: 'Added to the start page', unpinned: 'Removed from the start page', pinFull: 'The start page is full (12 sites)',
+  noArticle: 'This page has no article to read', cantOpen: 'No app can open this link',
+  listen: 'Listen', listening: 'Reading the article aloud…', minRead: '{0} min read', font: 'Font',
+  errTitle: 'This page didn’t open', errText: 'Check your connection or the address and try again.',
+  today: 'Today', yesterday: 'Yesterday', searchIn: 'Search {0}', noResults: 'No results',
+  'empty.bookmarks': 'No bookmarks yet.\nTap ★ in the menu to add one.', 'empty.history': 'History is empty', 'empty.readLater': 'Nothing saved to read',
+  clearHistory: 'Clear history', clearHistoryQ: 'Clear all browsing history?', historyCleared: 'History cleared',
+  shieldPage: 'ads and trackers blocked on this page', shieldOffHere: 'Shield is off for this site', shieldSite: 'Protection for this site',
+  shieldDisabled: 'Shield is turned off in settings', shieldOnFor: 'Shield on for {0}', shieldOffFor: 'Shield off for {0}',
+  blockedCount: '{0} ads and trackers blocked so far',
+  version: 'Version {0}',
+  'private.title': 'Private browsing',
+  'private.text': 'Pages you open here aren’t saved to history, and their data is wiped when you close the tab.',
+  'ntp.morning': 'Good morning', 'ntp.afternoon': 'Good afternoon', 'ntp.evening': 'Good evening',
+  'wx.clear': 'Clear', 'wx.partly': 'Partly cloudy', 'wx.cloudy': 'Cloudy', 'wx.fog': 'Fog', 'wx.drizzle': 'Drizzle',
+  'wx.rain': 'Rain', 'wx.snow': 'Snow', 'wx.showers': 'Showers', 'wx.storm': 'Thunderstorm',
+  'set.general': 'General', 'set.language': 'Language', 'set.theme': 'Appearance', 'set.auto': 'Auto', 'set.light': 'Light', 'set.dark': 'Dark',
+  'set.accent': 'Colour', 'set.digits': 'Digits', 'set.search': 'Search', 'set.suggestions': 'Search suggestions',
+  'set.suggestionsSub': 'Always off in private tabs', 'set.privacy': 'Privacy & shield', 'set.shield': 'Ad & tracker shield',
+  'set.popups': 'Block pop-ups', 'set.allowed': 'Shield off for this site', 'set.start': 'Start page',
+  'set.weather': 'Weather', 'set.city': 'City', 'set.wisdom': 'Saying of the day', 'set.shortcuts': 'Sites on the start page',
+  'set.other': 'Other', 'set.haptics': 'Light vibration on touch',
+};
+
+export const STRINGS = { ar, en };
+
+export function makeT(lang) {
+  const dict = STRINGS[lang] || ar;
+  return (key, ...args) => {
+    const s = dict[key] !== undefined ? dict[key] : ar[key] !== undefined ? ar[key] : key;
+    return args.length ? s.replace(/\{(\d)\}/g, (_m, i) => (args[i] !== undefined ? args[i] : '')) : s;
+  };
+}

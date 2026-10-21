@@ -1,0 +1,102 @@
+// أيقونات GB (نفس رسوم نسخة الكمبيوتر)
+import React from 'react';
+import { SvgXml } from 'react-native-svg';
+
+export const PATHS = {
+ "back": "<path d=\"M19 12H5M11 18l-6-6 6-6\"/>",
+ "forward": "<path d=\"M5 12h14M13 6l6 6-6 6\"/>",
+ "reload": "<path d=\"M20 12a8 8 0 1 1-2.34-5.66\"/><path d=\"M20 4v4.5h-4.5\"/>",
+ "close": "<path d=\"M6.5 6.5l11 11M17.5 6.5l-11 11\"/>",
+ "home": "<path d=\"M4 11l8-6.5 8 6.5\"/><path d=\"M6 9.5V20h4.5v-5.5h3V20H18V9.5\"/>",
+ "plus": "<path d=\"M12 5v14M5 12h14\"/>",
+ "minus": "<path d=\"M5 12h14\"/>",
+ "search": "<circle cx=\"11\" cy=\"11\" r=\"6.5\"/><path d=\"M20 20l-4.2-4.2\"/>",
+ "lock": "<rect x=\"5\" y=\"10.5\" width=\"14\" height=\"10\" rx=\"2.5\"/><path d=\"M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5\"/>",
+ "warn": "<path d=\"M12 4l9 16H3z\"/><path d=\"M12 10v4.5M12 17.5v.01\"/>",
+ "info": "<circle cx=\"12\" cy=\"12\" r=\"8.5\"/><path d=\"M12 11v5.5M12 7.8v.01\"/>",
+ "star": "<path d=\"M12 3.8l2.5 5.2 5.7.8-4.1 4 1 5.6-5.1-2.7-5.1 2.7 1-5.6-4.1-4 5.7-.8z\"/>",
+ "starFill": "<path fill=\"currentColor\" d=\"M12 3.8l2.5 5.2 5.7.8-4.1 4 1 5.6-5.1-2.7-5.1 2.7 1-5.6-4.1-4 5.7-.8z\"/>",
+ "shield": "<path d=\"M12 3.5l7.5 2.8v5.6c0 4.4-3.1 8-7.5 8.8-4.4-.8-7.5-4.4-7.5-8.8V6.3z\"/>",
+ "shieldOff": "<path d=\"M12 3.5l7.5 2.8v5.6c0 4.4-3.1 8-7.5 8.8-4.4-.8-7.5-4.4-7.5-8.8V6.3z\"/><path d=\"M4 4l16 16\"/>",
+ "download": "<path d=\"M12 4v11M7 10.5l5 5 5-5M5 20h14\"/>",
+ "dots": "<circle cx=\"12\" cy=\"5.5\" r=\"1.4\" fill=\"currentColor\" stroke=\"none\"/><circle cx=\"12\" cy=\"12\" r=\"1.4\" fill=\"currentColor\" stroke=\"none\"/><circle cx=\"12\" cy=\"18.5\" r=\"1.4\" fill=\"currentColor\" stroke=\"none\"/>",
+ "split": "<rect x=\"3.5\" y=\"4.5\" width=\"17\" height=\"15\" rx=\"2.5\"/><path d=\"M12 4.5v15\"/>",
+ "sidebar": "<rect x=\"3.5\" y=\"4.5\" width=\"17\" height=\"15\" rx=\"2.5\"/><path d=\"M14.5 4.5v15\"/>",
+ "vtabs": "<rect x=\"3.5\" y=\"4.5\" width=\"17\" height=\"15\" rx=\"2.5\"/><path d=\"M9 4.5v15M5.7 8.5h1.4M5.7 11.5h1.4\"/>",
+ "reader": "<path d=\"M4 5.5h5a3 3 0 0 1 3 3V19a2.5 2.5 0 0 0-2.5-2.5H4z\"/><path d=\"M20 5.5h-5a3 3 0 0 0-3 3V19a2.5 2.5 0 0 1 2.5-2.5H20z\"/>",
+ "history": "<path d=\"M4 12a8 8 0 1 0 2.6-5.9\"/><path d=\"M4 4.5V8h3.5M12 8v4.5l3 2\"/>",
+ "bookmark": "<path d=\"M7 4h10v16l-5-3.6L7 20z\"/>",
+ "note": "<path d=\"M5 4h10l4 4v12H5z\"/><path d=\"M14.5 4v4.5H19M8.5 12.5h7M8.5 16h4.5\"/>",
+ "sliders": "<path d=\"M4 7h9M17 7h3M4 17h3M11 17h9\"/><circle cx=\"15\" cy=\"7\" r=\"2\"/><circle cx=\"9\" cy=\"17\" r=\"2\"/>",
+ "moon": "<path d=\"M19.5 14.5A7.5 7.5 0 0 1 9.5 4.5a7.5 7.5 0 1 0 10 10z\"/>",
+ "sun": "<circle cx=\"12\" cy=\"12\" r=\"3.8\"/><path d=\"M12 3v2M12 19v2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M3 12h2M19 12h2M5.6 18.4L7 17M17 7l1.4-1.4\"/>",
+ "contrast": "<circle cx=\"12\" cy=\"12\" r=\"8.5\"/><path d=\"M12 3.5a8.5 8.5 0 0 1 0 17z\" fill=\"currentColor\"/>",
+ "camera": "<path d=\"M4 8.5h3l1.8-2.5h6.4L17 8.5h3V19H4z\"/><circle cx=\"12\" cy=\"13.3\" r=\"3.3\"/>",
+ "pip": "<rect x=\"3.5\" y=\"5\" width=\"17\" height=\"14\" rx=\"2.5\"/><rect x=\"11.5\" y=\"11\" width=\"6.5\" height=\"5.5\" rx=\"1\" fill=\"currentColor\" stroke=\"none\"/>",
+ "translate": "<path d=\"M4 6h8M8 4v2M10.5 6c0 3.8-2.4 6.8-6 8.3M6.2 9.3c1 2 3 3.5 5.3 4.4\"/><path d=\"M12.5 20l4-9 4 9M13.9 17h5.2\"/>",
+ "qr": "<path d=\"M4.5 4.5h5.5V10H4.5zM14 4.5h5.5V10H14zM4.5 14H10v5.5H4.5z\"/><path d=\"M14 14h2.2v2.2H14zM17.3 17.3h2.2v2.2h-2.2zM14 19.5h2.2M19.5 14v2.2\"/>",
+ "zoom": "<circle cx=\"11\" cy=\"11\" r=\"6.5\"/><path d=\"M20 20l-4.2-4.2M11 8.3v5.4M8.3 11h5.4\"/>",
+ "print": "<path d=\"M7 9V4h10v5M7 17H4.5v-7.5h15V17H17\"/><path d=\"M7 14h10v6H7z\"/>",
+ "volume": "<path d=\"M4.5 9.5h3.5l4.5-4v13l-4.5-4H4.5z\"/><path d=\"M16 9a4.5 4.5 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11\"/>",
+ "mute": "<path d=\"M4.5 9.5h3.5l4.5-4v13l-4.5-4H4.5z\"/><path d=\"M16.5 9.5l5 5M21.5 9.5l-5 5\"/>",
+ "pin": "<path d=\"M9.5 4h5l-.8 5.2 2.8 2.8v2H7.5v-2l2.8-2.8z\"/><path d=\"M12 14v6\"/>",
+ "mask": "<path d=\"M3 10.5C5 7.8 8.4 7 12 7s7 .8 9 3.5c-.8 4.6-3.6 7.5-5.6 7.5-1.7 0-2.1-2-3.4-2s-1.7 2-3.4 2c-2 0-4.8-2.9-5.6-7.5z\"/><circle cx=\"8.6\" cy=\"11.6\" r=\"1.4\"/><circle cx=\"15.4\" cy=\"11.6\" r=\"1.4\"/>",
+ "window": "<rect x=\"3.5\" y=\"5\" width=\"17\" height=\"14\" rx=\"2.5\"/><path d=\"M3.5 9h17\"/>",
+ "trash": "<path d=\"M4.5 7h15M9.5 7V4.5h5V7M6.5 7l1 12.5h9l1-12.5M10 11v5M14 11v5\"/>",
+ "folder": "<path d=\"M3.5 6.5h5.5l2 2h9.5V19h-17z\"/>",
+ "external": "<path d=\"M14 4.5h5.5V10M19.5 4.5L11 13M17.5 14v5.5h-13v-13H10\"/>",
+ "copy": "<rect x=\"8.5\" y=\"8.5\" width=\"11\" height=\"11\" rx=\"2\"/><path d=\"M15.5 8.5V4.5h-11v11h4\"/>",
+ "sparkle": "<path d=\"M12 3.5l1.9 5.2 5.2 1.9-5.2 1.9L12 17.7l-1.9-5.2-5.2-1.9 5.2-1.9z\"/><path d=\"M18.5 16.5l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7z\"/>",
+ "check": "<path d=\"M5 12.5l4.5 4.5L19 7.5\"/>",
+ "chevDown": "<path d=\"M6.5 9.5l5.5 5.5 5.5-5.5\"/>",
+ "chevUp": "<path d=\"M6.5 14.5L12 9l5.5 5.5\"/>",
+ "chevSide": "<path d=\"M10 6.5l5.5 5.5-5.5 5.5\"/>",
+ "edit": "<path d=\"M4.5 19.5h4l10-10-4-4-10 10z\"/><path d=\"M13 7l4 4\"/>",
+ "pause": "<path d=\"M9 5.5v13M15 5.5v13\"/>",
+ "play": "<path d=\"M8 5.5l11 6.5-11 6.5z\"/>",
+ "file": "<path d=\"M6.5 3.5h7.5l4 4V20.5H6.5z\"/><path d=\"M13.5 3.5V8h4.5\"/>",
+ "globe": "<circle cx=\"12\" cy=\"12\" r=\"8.5\"/><path d=\"M3.5 12h17M12 3.5c2.8 3.2 2.8 13.8 0 17M12 3.5c-2.8 3.2-2.8 13.8 0 17\"/>",
+ "text": "<path d=\"M4 18.5L8.8 6l4.8 12.5M5.7 14.5h6.2M15 18.5l2.8-7 2.8 7M15.8 16.5h4\"/>",
+ "fullscreen": "<path d=\"M4.5 9V4.5H9M19.5 9V4.5H15M4.5 15v4.5H9M19.5 15v4.5H15\"/>",
+ "exit": "<path d=\"M14.5 4.5h5v15h-5M10 8l-4 4 4 4M6 12h10\"/>",
+ "video": "<rect x=\"3.5\" y=\"6.5\" width=\"12\" height=\"11\" rx=\"2\"/><path d=\"M15.5 10.5l5-3v9l-5-3\"/>",
+ "mic": "<rect x=\"9\" y=\"3.5\" width=\"6\" height=\"11\" rx=\"3\"/><path d=\"M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v2.5\"/>",
+ "location": "<path d=\"M12 20.5s6.5-6 6.5-11a6.5 6.5 0 0 0-13 0c0 5 6.5 11 6.5 11z\"/><circle cx=\"12\" cy=\"9.5\" r=\"2.3\"/>",
+ "bell": "<path d=\"M6.5 16v-5a5.5 5.5 0 0 1 11 0v5l1.8 1.8H4.7z\"/><path d=\"M10 20.5a2 2 0 0 0 4 0\"/>",
+ "monitor": "<rect x=\"3.5\" y=\"4.5\" width=\"17\" height=\"11.5\" rx=\"2\"/><path d=\"M8.5 20h7M12 16v4\"/>",
+ "clipboard": "<path d=\"M9 4h6v3H9z\"/><path d=\"M7.5 5.5h-2v15h13v-15h-2\"/>",
+ "app": "<rect x=\"4.5\" y=\"4.5\" width=\"15\" height=\"15\" rx=\"4\"/><path d=\"M9.5 14.5l5-5M10.5 9.5h4v4\"/>",
+ "keyboard": "<rect x=\"2.5\" y=\"6.5\" width=\"19\" height=\"11\" rx=\"2\"/><path d=\"M6 10h.01M9.5 10h.01M13 10h.01M16.5 10h.01M7.5 14h9\"/>",
+ "puzzle": "<path d=\"M9 4.5h3.5v2a1.5 1.5 0 0 0 3 0v-2H19v4.5h-2a1.5 1.5 0 0 0 0 3h2v4.5h-4.5v-2a1.5 1.5 0 0 0-3 0v2H9V15H7a1.5 1.5 0 0 1 0-3h2z\"/>",
+ "sleep": "<path d=\"M19.5 14.5A7.5 7.5 0 0 1 9.5 4.5a7.5 7.5 0 1 0 10 10z\"/><path d=\"M14 4.5h3l-3 3.5h3\"/>",
+ "image": "<rect x=\"3.5\" y=\"4.5\" width=\"17\" height=\"15\" rx=\"2.5\"/><circle cx=\"9\" cy=\"10\" r=\"1.8\"/><path d=\"M20.5 16l-5-5L6 19.5\"/>",
+ "duplicate": "<rect x=\"8.5\" y=\"8.5\" width=\"11\" height=\"11\" rx=\"2\"/><path d=\"M15.5 8.5V4.5h-11v11h4M14 11.5v5M11.5 14h5\"/>",
+ "calc": "<rect x=\"5\" y=\"3.5\" width=\"14\" height=\"17\" rx=\"2.5\"/><path d=\"M8.5 7.5h7M8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01M8.5 15h.01M12 15h.01M15.5 15h.01\"/>",
+ "chart": "<path d=\"M4 20h16\"/><path d=\"M7 16.5V11M12 16.5V6.5M17 16.5v-4\"/>",
+ "apps": "<rect x=\"4.5\" y=\"4.5\" width=\"6\" height=\"6\" rx=\"2\"/><rect x=\"13.5\" y=\"4.5\" width=\"6\" height=\"6\" rx=\"2\"/><rect x=\"4.5\" y=\"13.5\" width=\"6\" height=\"6\" rx=\"2\"/><path d=\"M16.5 13.5v6M13.5 16.5h6\"/>",
+ "todo": "<path d=\"M4.5 6.5l1.5 1.5 3-3M4.5 12.5l1.5 1.5 3-3M4.5 18.5l1.5 1.5 3-3\"/><path d=\"M12 7h8M12 13h8M12 19h8\"/>",
+ "quote": "<path d=\"M9.5 7.5c-2.5.8-4 2.8-4 5.5v3.5h4.5V12H7.4c.2-1.4 1-2.4 2.6-3zM18.5 7.5c-2.5.8-4 2.8-4 5.5v3.5H19V12h-2.6c.2-1.4 1-2.4 2.6-3z\"/>",
+ "sunny": "<circle cx=\"12\" cy=\"12\" r=\"4\"/><g class=\"rays\"><path d=\"M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6\"/></g>",
+ "moonClear": "<path d=\"M19 14.5A7 7 0 0 1 9.5 5a7 7 0 1 0 9.5 9.5z\"/><path d=\"M17 4.5v2M16 5.5h2\"/>",
+ "cloud": "<path d=\"M7 18.5h10.5a4 4 0 0 0 .4-8 5.5 5.5 0 0 0-10.6 1.2A3.4 3.4 0 0 0 7 18.5z\"/>",
+ "cloudSun": "<path d=\"M8 4.5v1.3M3.7 8.8H5M4.9 5.6l.9.9M11.1 5.6l-.9.9\"/><path d=\"M5.6 11.4A3.5 3.5 0 1 1 11.5 8\"/><path d=\"M9 19.5h8.5a3.5 3.5 0 0 0 .3-7 4.8 4.8 0 0 0-9.2 1.1A2.95 2.95 0 0 0 9 19.5z\"/>",
+ "rain": "<path d=\"M7 14.5h10.5a4 4 0 0 0 .4-8 5.5 5.5 0 0 0-10.6 1.2A3.4 3.4 0 0 0 7 14.5z\"/><g class=\"drops\"><path d=\"M8.5 17.5l-1 2.5M12.5 17.5l-1 2.5M16.5 17.5l-1 2.5\"/></g>",
+ "snow": "<path d=\"M7 14.5h10.5a4 4 0 0 0 .4-8 5.5 5.5 0 0 0-10.6 1.2A3.4 3.4 0 0 0 7 14.5z\"/><path d=\"M8.5 18.5h.01M12 20h.01M15.5 18.5h.01\"/>",
+ "storm": "<path d=\"M7 14.5h10.5a4 4 0 0 0 .4-8 5.5 5.5 0 0 0-10.6 1.2A3.4 3.4 0 0 0 7 14.5z\"/><path d=\"M12.5 14l-2 3.5h3l-2 3.5\"/>",
+ "fog": "<path d=\"M7 12.5h10.5a4 4 0 0 0 .4-8 5.5 5.5 0 0 0-10.6 1.2A3.4 3.4 0 0 0 7 12.5z\"/><path d=\"M5 16h14M7 19.5h10\"/>",
+ "wind": "<path d=\"M3.5 9h11a2.5 2.5 0 1 0-2.5-2.5M3.5 15h14a2.5 2.5 0 1 1-2.5 2.5M3.5 12h8\"/>",
+ "drop": "<path d=\"M12 3.5s5.5 6 5.5 10a5.5 5.5 0 0 1-11 0c0-4 5.5-10 5.5-10z\"/>",
+ "grid": "<rect x=\"4\" y=\"4\" width=\"6.5\" height=\"6.5\" rx=\"1.5\"/><rect x=\"13.5\" y=\"4\" width=\"6.5\" height=\"6.5\" rx=\"1.5\"/><rect x=\"4\" y=\"13.5\" width=\"6.5\" height=\"6.5\" rx=\"1.5\"/><rect x=\"13.5\" y=\"13.5\" width=\"6.5\" height=\"6.5\" rx=\"1.5\"/>"
+};
+
+export const LOGO_XML = "<svg viewBox=\"0 0 64 64\" aria-hidden=\"true\"><defs><linearGradient id=\"gbl-g\" x1=\"0\" y1=\"0\" x2=\"0\" y2=\"1\"><stop offset=\"0\" stop-color=\"#F6D27A\"/><stop offset=\"1\" stop-color=\"#D49A2A\"/></linearGradient></defs><g transform=\"translate(32 32)\"><rect x=\"-21\" y=\"-21\" width=\"42\" height=\"42\" rx=\"6\" fill=\"url(#gbl-g)\"/><rect x=\"-21\" y=\"-21\" width=\"42\" height=\"42\" rx=\"6\" fill=\"url(#gbl-g)\" transform=\"rotate(45)\"/><circle r=\"17\" fill=\"#1A2C82\"/><path d=\"M-2 -7.5a7.5 7.5 0 1 0 5.8 12.3v-5h-5\" fill=\"none\" stroke=\"#F6D27A\" stroke-width=\"3.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" transform=\"translate(-1.5 1)\"/></g></svg>";
+
+export function Icon({ name, size = 22, color = '#000', strokeWidth = 1.8, style }) {
+  const inner = (PATHS[name] || PATHS.globe).replace(/currentColor/g, color);
+  const xml = `<svg viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="${strokeWidth}" stroke-linecap="round" stroke-linejoin="round">${inner}</svg>`;
+  return <SvgXml xml={xml} width={size} height={size} style={style} />;
+}
+
+export function Logo({ size = 28, style }) {
+  return <SvgXml xml={LOGO_XML} width={size} height={size} style={style} />;
+}

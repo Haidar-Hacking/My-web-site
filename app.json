@@ -1,0 +1,56 @@
+{
+  "expo": {
+    "name": "GB Browser",
+    "slug": "gb-browser",
+    "version": "1.0.0",
+    "orientation": "default",
+    "icon": "./assets/icon.png",
+    "scheme": "gbbrowser",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "bundleIdentifier": "com.gbbrowser.app",
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSAppTransportSecurity": { "NSAllowsArbitraryLoadsInWebContent": true },
+        "NSCameraUsageDescription": "Websites you open may ask to use the camera, for example for video calls.",
+        "NSMicrophoneUsageDescription": "Websites you open may ask to use the microphone, for example for voice messages or calls.",
+        "NSLocationWhenInUseUsageDescription": "Websites you open may ask for your location, for example maps.",
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "package": "com.gbbrowser.app",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#14215A"
+      },
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "category": ["BROWSABLE", "DEFAULT"],
+          "data": [{ "scheme": "http" }, { "scheme": "https" }]
+        }
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 150,
+          "resizeMode": "contain",
+          "backgroundColor": "#0F1840"
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": { "usesCleartextTraffic": true }
+        }
+      ]
+    ]
+  }
+}
