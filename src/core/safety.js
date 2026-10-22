@@ -12,6 +12,7 @@ const ADULT_SITES = [
   'faphouse.com', 'pornhubpremium.com', 'xnxx.tv', 'xvideos.es', 'aznude.com', 'porntube.com', 'fapster.xxx',
 ];
 import BIG_LIST from './adultlist';
+import { getParam, parseURL, setParam } from './logic';
 
 const SET = new Set(ADULT_SITES);
 let bigLoaded = false;
@@ -27,7 +28,9 @@ const ADULT_TLD = /\.(xxx|porn|sex|adult)$/;
 
 export function isAdult(url) {
   let h = '';
-  try { h = new URL(url).hostname.toLowerCase(); } catch { return false; }
+  const p = parseURL(url);
+  if (!p) return false;
+  h = p.hostname;
   if (ADULT_TLD.test(h) || WORDS.test(h)) return true;
   loadBig();
   while (h) {
@@ -41,12 +44,12 @@ export function isAdult(url) {
 
 // Turns safe search on if someone opens Google or Bing results directly.
 export function forceSafeSearch(url) {
-  let u;
-  try { u = new URL(url); } catch { return null; }
-  const h = u.hostname.replace(/^www\./, '');
-  if (/^google\.[a-z.]+$/.test(h) && u.pathname === '/search' && u.searchParams.get('safe') !== 'active') { u.searchParams.set('safe', 'active'); return u.toString(); }
-  if (h === 'bing.com' && u.pathname === '/search' && u.searchParams.get('adlt') !== 'strict') { u.searchParams.set('adlt', 'strict'); return u.toString(); }
-  if (h === 'duckduckgo.com' && u.searchParams.get('q') && u.searchParams.get('kp') !== '1') { u.searchParams.set('kp', '1'); return u.toString(); }
+  const p = parseURL(url);
+  if (!p) return null;
+  const h = p.hostname.replace(/^www\./, '');
+  if (/^google\.[a-z.]+$/.test(h) && p.pathname === '/search' && getParam(url, 'safe') !== 'active') return setParam(url, 'safe', 'active');
+  if (h === 'bing.com' && p.pathname === '/search' && getParam(url, 'adlt') !== 'strict') return setParam(url, 'adlt', 'strict');
+  if (h === 'duckduckgo.com' && getParam(url, 'q') && getParam(url, 'kp') !== '1') return setParam(url, 'kp', '1');
   return null;
 }
 

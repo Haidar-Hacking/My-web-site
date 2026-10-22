@@ -49,13 +49,42 @@ export function searchURL(q) {
   return 'https://duckduckgo.com/?' + Object.keys(params).map((k) => `${k}=${encodeURIComponent(params[k])}`).join('&');
 }
 
+// React Native's built-in URL class can't read hostname, pathname or query parameters
+// (it throws "not implemented"), so addresses are taken apart with these small helpers instead.
+export function parseURL(url) {
+  const m = /^([a-z][a-z0-9+.-]*):\/\/(?:[^@/?#]*@)?(\[[^\]]+\]|[^:/?#]*)(?::(\d+))?([^?#]*)(\?[^#]*)?(#.*)?$/i.exec(String(url || '').trim());
+  if (!m) return null;
+  return { protocol: m[1].toLowerCase() + ':', hostname: m[2].toLowerCase(), port: m[3] || '', pathname: m[4] || '/', search: m[5] || '', hash: m[6] || '' };
+}
+
+export function getParam(url, key) {
+  const p = parseURL(url);
+  if (!p || !p.search) return null;
+  for (const pair of p.search.slice(1).split('&')) {
+    const i = pair.indexOf('=');
+    const k = i < 0 ? pair : pair.slice(0, i);
+    if (k !== key) continue;
+    try { return decodeURIComponent((i < 0 ? '' : pair.slice(i + 1)).replace(/\+/g, ' ')); } catch { return pair.slice(i + 1); }
+  }
+  return null;
+}
+
+export function setParam(url, key, value) {
+  const hashAt = url.indexOf('#');
+  const hash = hashAt < 0 ? '' : url.slice(hashAt);
+  let base = hashAt < 0 ? url : url.slice(0, hashAt);
+  const re = new RegExp('([?&])' + key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '=[^&]*');
+  const item = key + '=' + encodeURIComponent(value);
+  if (re.test(base)) base = base.replace(re, '$1' + item);
+  else base += (base.includes('?') ? '&' : '?') + item;
+  return base + hash;
+}
+
 // If this address is a Go Browser results page, returns the search words; otherwise ''.
 export function searchQueryOf(url) {
-  try {
-    const u = new URL(url);
-    if (u.hostname.replace(/^www\./, '') !== 'duckduckgo.com' || u.pathname !== '/') return '';
-    return u.searchParams.get('q') || '';
-  } catch { return ''; }
+  const p = parseURL(url);
+  if (!p || p.hostname.replace(/^www\./, '') !== 'duckduckgo.com' || p.pathname !== '/') return '';
+  return getParam(url, 'q') || '';
 }
 
 export function matchKeyword(raw, lang = 'ar') {

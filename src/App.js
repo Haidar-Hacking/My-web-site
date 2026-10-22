@@ -11,7 +11,7 @@ import { WebView } from 'react-native-webview';
 import { AD_HOSTS } from './core/adhosts';
 import { Icon } from './core/icons';
 import { makeT } from './core/i18n';
-import { digits, formatNumber, isInternal, setSearchLook, siteOf, uid } from './core/logic';
+import { digits, formatNumber, isInternal, parseURL, setSearchLook, siteOf, uid } from './core/logic';
 import { PAGE_INFO, READER_SCRIPT, darkScript, findScript, shieldScript, textSizeScript } from './core/scripts';
 import { Bookmarks, History, ReadLater, addBlocked, get, loadStore, set, setSetting, useData } from './core/store';
 import { palette } from './core/theme';
@@ -42,7 +42,9 @@ const IOS_APP_NAME = 'Version/18.0 Mobile/15E148 Safari/604.1';
 const AD_SET = new Set(AD_HOSTS);
 function isAdURL(url) {
   let h = '';
-  try { h = new URL(url).hostname; } catch { return false; }
+  const p = parseURL(url);
+  if (!p) return false;
+  h = p.hostname;
   while (h) {
     if (AD_SET.has(h)) return true;
     const i = h.indexOf('.');
