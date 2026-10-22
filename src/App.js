@@ -149,7 +149,6 @@ const TabWeb = memo(function TabWeb({ tab, visible, settings, allow, bind, on })
         thirdPartyCookiesEnabled
         domStorageEnabled
         mixedContentMode="compatibility"
-        decelerationRate="normal"
         originWhitelist={['*']}
         webviewDebuggingEnabled={__DEV__}
       />
