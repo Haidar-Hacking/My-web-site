@@ -72,27 +72,32 @@ jobs:
             echo "field $1 at: $b"
             [ -n "$b" ] && adb shell input tap $b && sleep 1 && adb shell input text "$2"
           }
-          fill_field 0 Tester
-          fill_field 1 tester@example.com
-          fill_field 2 secret123
-          adb shell input keyevent 4
-          sleep 1
+          front() { adb shell dumpsys activity activities | grep -m1 -E "topResumedActivity|mResumedActivity" ; }
+          fill_field 0 Tester; adb shell input keyevent 4; sleep 1
+          fill_field 1 tester@example.com; adb shell input keyevent 4; sleep 1
+          fill_field 2 secret123; adb shell input keyevent 4; sleep 1
+          adb exec-out screencap -p > out/2a-filled.png
           tap_text "إنشاء الحساب"
-          sleep 6
+          sleep 8
           adb exec-out screencap -p > out/2-after-signup.png
           tap_text "Wikipedia"
           sleep 15
           adb exec-out screencap -p > out/3-after-tap-site.png
-          adb shell pidof com.gbbrowser.app > out/alive-after-site.txt || echo "APP NOT RUNNING" > out/alive-after-site.txt
-          adb shell am start -n com.gbbrowser.app/.MainActivity
-          sleep 6
+          front > out/front-after-site.txt
+          adb shell input keyevent 4; sleep 4
+          tap_text "Instagram"
+          sleep 15
+          adb exec-out screencap -p > out/3b-after-instagram.png
+          front > out/front-after-instagram.txt
+          adb shell am start -n com.gbbrowser.app/.MainActivity; sleep 4
+          adb shell input keyevent 4; sleep 4
           tap_text "ابحث أو اكتب عنوان موقع"
           sleep 2
           adb shell input text "weather"
           adb shell input keyevent 66
           sleep 15
           adb exec-out screencap -p > out/4-after-search.png
-          adb shell pidof com.gbbrowser.app > out/alive-after-search.txt || echo "APP NOT RUNNING" > out/alive-after-search.txt
+          front > out/front-after-search.txt
           adb logcat -d > out/logcat-full.txt
           grep -E "AndroidRuntime|ReactNativeJS|FATAL|ReactNative|Hermes|libc  |DEBUG   " out/logcat-full.txt | tail -400 > out/logcat-crash.txt || true
           adb shell uiautomator dump /sdcard/ui.xml >/dev/null; adb pull /sdcard/ui.xml out/ui-final.xml >/dev/null

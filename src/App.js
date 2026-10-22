@@ -150,7 +150,7 @@ const TabWeb = memo(function TabWeb({ tab, visible, settings, allow, bind, on })
         domStorageEnabled
         mixedContentMode="compatibility"
         decelerationRate="normal"
-        originWhitelist={['http://*', 'https://*', 'about:*', 'data:*', 'blob:*']}
+        originWhitelist={['*']}
         webviewDebuggingEnabled={__DEV__}
       />
     </View>
@@ -383,12 +383,23 @@ function Browser() {
         }
         return true;
       }
-      let target = url;
+      // Everything stays inside GB Browser. Links that try to jump to another app (intent://,
+      // fb://, twitter://, market://…) open their web version here when they have one; otherwise
+      // the person gets a choice instead of being sent out of the app.
       if (/^intent:/i.test(url)) {
         const fb = url.match(/S\.browser_fallback_url=([^;]+)/);
-        if (fb) { go(decodeURIComponent(fb[1]), id); return false; }
+        let web = '';
+        try { web = fb ? decodeURIComponent(fb[1]) : ''; } catch { web = ''; }
+        if (!web) {
+          const m = url.match(/^intent:\/\/([^#]*)#Intent;(.*)$/i);
+          const scheme = m && (m[2].match(/(?:^|;)scheme=([^;]+)/i) || [])[1];
+          if (m && /^https?$/i.test(scheme || '')) web = scheme.toLowerCase() + '://' + m[1];
+        }
+        if (/^https?:\/\//i.test(web)) { go(web, id); return false; }
       }
-      Linking.openURL(target).catch(() => toast(tRef.current('cantOpen')));
+      if (req.isTopFrame !== false && (req.navigationType === 'click' || req.navigationType === undefined)) {
+        toast(tRef.current('ext.text'), { label: tRef.current('ext.open'), run: () => Linking.openURL(url).catch(() => toast(tRef.current('cantOpen'))) });
+      }
       return false;
     },
     openWindow: (id, url) => {
