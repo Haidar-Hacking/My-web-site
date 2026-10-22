@@ -15,7 +15,7 @@ echo   This happens only once and takes a few minutes...
 echo.
 call npm install --no-audit --no-fund
 if errorlevel 1 exit /b 1
-call npx --yes expo install react react-native react-native-webview @react-native-async-storage/async-storage react-native-svg react-native-safe-area-context expo-linear-gradient expo-haptics expo-clipboard expo-speech expo-status-bar expo-splash-screen expo-build-properties
+call npx --yes expo install react react-native react-native-webview @react-native-async-storage/async-storage react-native-svg react-native-safe-area-context expo-linear-gradient expo-haptics expo-clipboard expo-speech expo-status-bar expo-splash-screen expo-build-properties expo-file-system expo-intent-launcher expo-application expo-constants expo-crypto
 if errorlevel 1 exit /b 1
 exit /b 0
 

@@ -7,7 +7,7 @@ export const ENGINES = {
     suggest: (q) => `https://suggestqueries.google.com/complete/search?client=firefox&ie=utf-8&oe=utf-8&q=${encodeURIComponent(q)}`,
   },
   bing: { name: 'Bing', url: 'https://www.bing.com/search?q=%s', suggest: (q) => `https://api.bing.com/osjson.aspx?query=${encodeURIComponent(q)}` },
-  duck: { name: 'DuckDuckGo', url: 'https://duckduckgo.com/?q=%s', suggest: (q) => `https://duckduckgo.com/ac/?type=list&q=${encodeURIComponent(q)}` },
+  duck: { name: 'DuckDuckGo', url: 'https://duckduckgo.com/?q=%s&kp=1', suggest: (q) => `https://duckduckgo.com/ac/?type=list&kp=1&q=${encodeURIComponent(q)}` },
   brave: { name: 'Brave Search', url: 'https://search.brave.com/search?q=%s', suggest: (q) => `https://search.brave.com/api/suggest?q=${encodeURIComponent(q)}` },
 };
 
@@ -15,7 +15,7 @@ export const KEYWORDS = [
   { keys: ['yt', 'يوتيوب'], name: 'YouTube', url: 'https://m.youtube.com/results?search_query=%s' },
   { keys: ['w', 'wiki', 'ويكي'], name: 'Wikipedia', url: 'https://{lang}.m.wikipedia.org/w/index.php?search=%s' },
   { keys: ['m', 'map', 'خريطة', 'خرائط'], name: 'Google Maps', url: 'https://www.google.com/maps/search/%s' },
-  { keys: ['img', 'صور'], name: 'Google Images', url: 'https://www.google.com/search?tbm=isch&q=%s' },
+  { keys: ['img', 'صور'], name: 'DuckDuckGo Images', url: 'https://duckduckgo.com/?q=%s&iax=images&ia=images&kp=1' },
   { keys: ['tr', 'ترجم'], name: 'Google Translate', url: 'https://translate.google.com/?sl=auto&tl={lang}&text=%s&op=translate' },
   { keys: ['gh'], name: 'GitHub', url: 'https://github.com/search?q=%s' },
   { keys: ['x', 'tw'], name: 'X', url: 'https://x.com/search?q=%s' },
@@ -35,8 +35,9 @@ export function normalize(s) {
     .trim();
 }
 
-export function searchURL(q, engine = 'google') {
-  return (ENGINES[engine] || ENGINES.google).url.replace('%s', encodeURIComponent(q));
+// DuckDuckGo is built in, with strict safe search always on.
+export function searchURL(q) {
+  return ENGINES.duck.url.replace('%s', encodeURIComponent(q));
 }
 
 export function matchKeyword(raw, lang = 'ar') {

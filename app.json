@@ -2,7 +2,7 @@
   "expo": {
     "name": "GB Browser",
     "slug": "gb-browser",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "orientation": "default",
     "icon": "./assets/icon.png",
     "scheme": "gbbrowser",
@@ -18,7 +18,8 @@
         "NSMicrophoneUsageDescription": "Websites you open may ask to use the microphone, for example for voice messages or calls.",
         "NSLocationWhenInUseUsageDescription": "Websites you open may ask for your location, for example maps.",
         "ITSAppUsesNonExemptEncryption": false
-      }
+      },
+      "buildNumber": "10200"
     },
     "android": {
       "package": "com.gbbrowser.app",
@@ -42,6 +43,10 @@
             }
           ]
         }
+      ],
+      "versionCode": 10200,
+      "permissions": [
+        "REQUEST_INSTALL_PACKAGES"
       ]
     },
     "web": {

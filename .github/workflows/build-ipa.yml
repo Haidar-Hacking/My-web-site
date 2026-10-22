@@ -14,6 +14,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Read the version
+        run: echo "APP_VERSION=$(node -p \"require('./app.json').expo.version\")" >> $GITHUB_ENV
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -21,7 +24,7 @@ jobs:
       - name: Install packages
         run: |
           npm install --no-audit --no-fund
-          npx expo install react react-native react-native-webview @react-native-async-storage/async-storage react-native-svg react-native-safe-area-context expo-linear-gradient expo-haptics expo-clipboard expo-speech expo-status-bar expo-splash-screen expo-build-properties
+          npx expo install react react-native react-native-webview @react-native-async-storage/async-storage react-native-svg react-native-safe-area-context expo-linear-gradient expo-haptics expo-clipboard expo-speech expo-status-bar expo-splash-screen expo-build-properties expo-file-system expo-intent-launcher expo-application expo-constants expo-crypto
 
       - name: Generate the iPhone project
         run: npx expo prebuild --platform ios
@@ -49,6 +52,7 @@ jobs:
       - name: Publish under Releases
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ipa-${{ github.run_number }}
-          name: GB Browser IPA ${{ github.run_number }}
+          tag_name: v${{ env.APP_VERSION }}
+          name: GB Browser ${{ env.APP_VERSION }}
+          body_path: release-notes.md
           files: GB-Browser.ipa

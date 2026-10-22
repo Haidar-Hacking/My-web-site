@@ -44,7 +44,7 @@ export default function AddressOverlay({ visible, tab, tabs, onClose, onGo, onSw
     if (!q || !settings.suggestions || (tab && tab.private) || /^https?:\/\//.test(q) || q.length > 120) return undefined;
     const timer = setTimeout(async () => {
       try {
-        const engine = ENGINES[settings.engine] || ENGINES.google;
+        const engine = ENGINES.duck;
         const ctrl = new AbortController();
         const kill = setTimeout(() => ctrl.abort(), 1500);
         const res = await fetch(engine.suggest(q), { signal: ctrl.signal });
@@ -58,13 +58,13 @@ export default function AddressOverlay({ visible, tab, tabs, onClose, onGo, onSw
 
   if (!shown) return null;
 
-  const engineName = (ENGINES[settings.engine] || ENGINES.google).name;
+  const engineName = (ENGINES.duck).name;
   const items = [];
   if (q) {
     const kw = matchKeyword(q, lang);
     const url = toURL(q, settings.engine, lang);
     if (kw) items.push({ kind: 'keyword', label: kw.query, url: kw.url, tag: t('searchOn', kw.name) });
-    else if (url && url !== searchURL(q, settings.engine)) items.push({ kind: 'url', label: prettyURL(url), url });
+    else if (url && url !== searchURL(q)) items.push({ kind: 'url', label: prettyURL(url), url });
     else items.push({ kind: 'search', label: q, url, tag: t('searchWith', engineName) });
     const answer = calc(q);
     if (answer !== null) items.push({ kind: 'calc', label: '= ' + num(answer), value: answer });
@@ -74,7 +74,7 @@ export default function AddressOverlay({ visible, tab, tabs, onClose, onGo, onSw
     get('bookmarks').filter((b) => normalize(b.title).includes(nq) || b.url.includes(nq)).slice(0, 3)
       .forEach((b) => items.push({ kind: 'bookmark', label: b.title, url: b.url }));
     if (!(tab && tab.private)) History.query(q, 4).forEach((h) => items.push({ kind: 'history', label: h.title || prettyURL(h.url), url: h.url, sub: prettyURL(h.url) }));
-    remote.forEach((r) => items.push({ kind: 'search', label: r, url: searchURL(r, settings.engine) }));
+    remote.forEach((r) => items.push({ kind: 'search', label: r, url: searchURL(r) }));
   } else if (!(tab && tab.private)) {
     History.query('', 8).forEach((h) => items.push({ kind: 'history', label: h.title || prettyURL(h.url), url: h.url, sub: prettyURL(h.url) }));
   }

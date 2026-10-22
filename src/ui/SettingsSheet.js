@@ -3,8 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { Alert, ScrollView, StyleSheet, Switch, Text, TextInput, View } from 'react-native';
 import { Icon, Logo } from '../core/icons';
 import { ACCENTS } from '../core/theme';
-import { ENGINES, siteOf } from '../core/logic';
+import { siteOf } from '../core/logic';
 import { History, set, setSetting, useData } from '../core/store';
+import { signOut } from '../core/account';
+import { currentVersion } from '../core/updates';
 import { Press, Sheet, Txt, tap, toast, useUI } from './kit';
 
 export const VERSION = '1.1.0';
@@ -65,6 +67,7 @@ export default function SettingsSheet({ visible, onClose }) {
   const stats = useData('stats');
   const allow = useData('siteAllow');
   const shortcuts = useData('shortcuts');
+  const account = useData('account');
   const [city, setCity] = useState(settings.city);
   useEffect(() => { if (visible) setCity(settings.city); }, [visible]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -76,6 +79,14 @@ export default function SettingsSheet({ visible, onClose }) {
   return (
     <Sheet visible={visible} onClose={onClose} full title={t('settings')}>
       <ScrollView style={{ flex: 1 }} contentContainerStyle={{ paddingBottom: 30 }} keyboardShouldPersistTaps="handled">
+        <Section title={t('set.account')}>
+          <Line icon="user" label={account.name || '—'} sub={account.email} />
+          <Line icon="logout" label={t('auth.logout')} danger last onPress={() => Alert.alert(t('auth.logout'), t('auth.logoutQ'), [
+            { text: t('cancel'), style: 'cancel' },
+            { text: t('auth.logout'), style: 'destructive', onPress: () => { onClose(); signOut(); } },
+          ])} />
+        </Section>
+
         <Section title={t('set.general')}>
           <Line icon="globe" label={t('set.language')}>
             <Choice options={[['ar', 'العربية'], ['en', 'English']]} value={settings.lang} onChange={(v) => setSetting('lang', v)} />
@@ -100,13 +111,12 @@ export default function SettingsSheet({ visible, onClose }) {
         </Section>
 
         <Section title={t('set.search')}>
-          {Object.keys(ENGINES).map((k) => (
-            <Line key={k} indent label={ENGINES[k].name} onPress={() => { tap('select'); setSetting('engine', k); }}>
-              <View style={[st.radio, { borderColor: settings.engine === k ? c.accent : c.line }]}>
-                {settings.engine === k ? <View style={[st.dot, { backgroundColor: c.accent }]} /> : null}
-              </View>
-            </Line>
-          ))}
+          <Line icon="search" label="DuckDuckGo" sub={t('set.engineBuiltIn')}>
+            <Icon name="check" size={18} color={c.accent} strokeWidth={2.6} />
+          </Line>
+          <Line icon="shield" label={t('set.family')} sub={t('set.familySub')}>
+            <Icon name="lock" size={17} color={c.faint} />
+          </Line>
           <Line icon="sparkle" label={t('set.suggestions')} sub={t('set.suggestionsSub')} last><Toggle k="suggestions" settings={settings} /></Line>
         </Section>
 
@@ -159,7 +169,7 @@ export default function SettingsSheet({ visible, onClose }) {
         <View style={st.about}>
           <Logo size={48} />
           <Txt align="center" style={{ fontWeight: '800', fontSize: 17, marginTop: 8 }}>GB Browser</Txt>
-          <Txt align="center" style={{ color: c.faint, fontSize: 13 }}>{t('version', num(VERSION))}</Txt>
+          <Txt align="center" style={{ color: c.faint, fontSize: 13 }}>{t('version', num(currentVersion()))}</Txt>
         </View>
       </ScrollView>
     </Sheet>

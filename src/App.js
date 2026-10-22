@@ -1,7 +1,7 @@
 // GB Browser للموبايل (آيفون وأندرويد) — الملف الرئيسي: التبويبات والصفحات وكل اللوحات
 import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
-  BackHandler, I18nManager, KeyboardAvoidingView, Linking, Platform, Share, StyleSheet, Text, View, useColorScheme,
+  AppState, BackHandler, I18nManager, KeyboardAvoidingView, Linking, Platform, Share, StyleSheet, Text, View, useColorScheme,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
@@ -20,6 +20,11 @@ import BottomBar from './ui/BottomBar';
 import Library from './ui/Library';
 import MenuSheet from './ui/MenuSheet';
 import { FindBar, ShieldSheet } from './ui/PageTools';
+import AuthScreen from './ui/AuthScreen';
+import UpdateGate from './ui/UpdateGate';
+import { isSignedIn } from './core/account';
+import { forceSafeSearch, isAdult } from './core/safety';
+import { checkForUpdate } from './core/updates';
 import ReaderSheet from './ui/ReaderSheet';
 import SettingsSheet from './ui/SettingsSheet';
 import StartPage from './ui/StartPage';
@@ -197,6 +202,19 @@ function Browser() {
   const tRef = useRef(t);
   tRef.current = t;
 
+  // ---- Sign-in and updates ----
+  useData('auth');
+  useData('account');
+  const signedIn = isSignedIn();
+  const [update, setUpdate] = useState(null);
+  useEffect(() => {
+    if (!signedIn) return undefined;
+    const check = () => checkForUpdate().then((u) => { if (u) setUpdate(u); }).catch(() => {});
+    check();
+    const sub = AppState.addEventListener('change', (s) => { if (s === 'active') check(); });
+    return () => sub.remove();
+  }, [signedIn]);
+
   useEffect(() => { SplashScreen.hideAsync().catch(() => {}); }, []);
 
   // ---- Tab state helpers ----
@@ -240,7 +258,10 @@ function Browser() {
     const tab = tabsRef.current.find((x) => x.id === (id || activeRef.current.id));
     if (!tab) return;
     setSheet(null);
-    if (isInternal(url)) { patch(tab.id, { url: START, src: null, title: '', loading: false, canBack: false, canFwd: false, blocked: 0 }); return; }
+    if (isInternal(url)) { patch(tab.id, { url: START, src: null, title: '', loading: false, canBack: false, canFwd: false, blocked: 0, adult: '' }); return; }
+    if (isAdult(url)) { tap('medium'); patch(tab.id, { adult: siteOf(url) }); return; }
+    url = forceSafeSearch(url) || url;
+    if (tab.adult) patch(tab.id, { adult: '' });
     const web = refs.current[tab.id];
     if (web && tab.src === url && !isInternal(tab.url)) {
       web.injectJavaScript(`window.location.href = ${JSON.stringify(url)}; true;`);
@@ -296,7 +317,7 @@ function Browser() {
       ? list.map((x) => (x.id === id ? { ...x, src: x.url } : x))
       : list)),
     loadStart: (id, n) => {
-      const p = { loading: true, progress: 0.08, blocked: 0, theme: '' };
+      const p = { loading: true, progress: 0.08, blocked: 0, theme: '', adult: '' };
       if (n && /^https?:/.test(n.url || '')) p.url = n.url;
       patch(id, p);
     },
@@ -341,6 +362,10 @@ function Browser() {
     should: (id, req) => {
       const url = req.url || '';
       if (/^(https?|about|data|blob|file):/i.test(url)) {
+        const top = req.isTopFrame !== false;
+        if (isAdult(url)) { if (top) patch(id, { adult: siteOf(url), loading: false }); return false; }
+        const safe = top && forceSafeSearch(url);
+        if (safe) { go(safe, id); return false; }
         const s = get('settings');
         if (s.shield && isAdURL(url)) {
           const tab = tabsRef.current.find((x) => x.id === id);
@@ -472,6 +497,16 @@ function Browser() {
     ? (c.dark ? 'light' : 'dark')
     : internal ? 'light' : (topLight ? 'light' : 'dark');
 
+  if (!signedIn) {
+    return (
+      <Ctx.Provider value={ui}>
+        <StatusBar style="light" />
+        <AuthScreen onDone={() => {}} />
+        <ToastHost bottom={insets.bottom + 40} />
+      </Ctx.Provider>
+    );
+  }
+
   return (
     <Ctx.Provider value={ui}>
       <View style={[st.root, { backgroundColor: internal ? c.lapisBottom : topColor }]}>
@@ -493,6 +528,17 @@ function Browser() {
               ))}
               {internal ? (
                 <StartPage key={active.id} tab={active} onOpen={(u) => go(u)} onSearch={() => setSheet('address')} />
+              ) : null}
+              {active.adult ? (
+                <View style={[StyleSheet.absoluteFill, st.blocked, { backgroundColor: c.lapisBottom }]}>
+                  <View style={st.blockedIc}><Icon name="shield" size={40} color="#E2B54C" /></View>
+                  <Text style={st.blockedH}>{t('adult.title')}</Text>
+                  <Text style={st.blockedP}>{t('adult.text')}</Text>
+                  <Text style={st.blockedSite}>{active.adult}</Text>
+                  <Press onPress={() => patch(active.id, { adult: '' })} style={st.blockedBtn}>
+                    <Text style={{ color: '#1A2448', fontWeight: '800', fontSize: 15 }}>{t('adult.back')}</Text>
+                  </Press>
+                </View>
               ) : null}
             </View>
             {find ? (
@@ -548,6 +594,7 @@ function Browser() {
         <ShieldSheet visible={sheet === 'shield'} tab={active} onClose={() => setSheet(null)} onSiteToggle={siteToggle} />
         <Library visible={sheet === 'library'} section={section} onClose={() => setSheet(null)} onOpen={(u) => go(u)} />
         <SettingsSheet visible={sheet === 'settings'} onClose={() => setSheet(null)} />
+        <UpdateGate update={update} />
         <ReaderSheet article={article} onClose={() => setArticle(null)} onLink={(u) => go(u)} />
       </View>
     </Ctx.Provider>
@@ -569,6 +616,12 @@ export default function App() {
 }
 
 const st = StyleSheet.create({
+  blocked: { alignItems: 'center', justifyContent: 'center', padding: 28, zIndex: 5 },
+  blockedIc: { width: 80, height: 80, borderRadius: 26, backgroundColor: 'rgba(255,255,255,0.12)', alignItems: 'center', justifyContent: 'center', marginBottom: 18 },
+  blockedH: { color: '#F4F6FC', fontSize: 23, fontWeight: '800', textAlign: 'center' },
+  blockedP: { color: 'rgba(244,246,252,0.82)', fontSize: 15, lineHeight: 24, textAlign: 'center', marginTop: 8, maxWidth: 330 },
+  blockedSite: { color: 'rgba(244,246,252,0.5)', fontSize: 13, marginTop: 10 },
+  blockedBtn: { marginTop: 22, height: 48, paddingHorizontal: 30, borderRadius: 14, backgroundColor: '#E2B54C', alignItems: 'center', justifyContent: 'center' },
   root: { flex: 1 },
   content: { flex: 1, overflow: 'hidden' },
   web: { flex: 1, backgroundColor: 'transparent' },

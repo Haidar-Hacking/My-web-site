@@ -40,6 +40,9 @@ const DEFAULTS = {
   stats: { blocked: 0, since: Date.now() },
   session: { tabs: [], active: 0 },
   siteAllow: [],
+  account: {},
+  auth: { in: false },
+  updates: { accepted: '' },
 };
 
 const state = JSON.parse(JSON.stringify(DEFAULTS));
