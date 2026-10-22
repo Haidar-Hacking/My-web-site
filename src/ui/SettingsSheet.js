@@ -7,7 +7,7 @@ import { ENGINES, siteOf } from '../core/logic';
 import { History, set, setSetting, useData } from '../core/store';
 import { Press, Sheet, Txt, tap, toast, useUI } from './kit';
 
-export const VERSION = '1.0.0';
+export const VERSION = '1.1.0';
 
 function Section({ title, children }) {
   const { c } = useUI();

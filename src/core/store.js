@@ -8,7 +8,8 @@ const DEFAULTS = {
     lang: 'ar',
     theme: 'system',
     accent: 'lapis',
-    engine: 'google',
+    engine: 'duck',
+    engineV: 2,
     suggestions: true,
     shield: true,
     popups: true,
@@ -65,6 +66,8 @@ export async function loadStore() {
       } catch { /* keep default */ }
     }
   } catch { /* storage unavailable: run with defaults */ }
+  // DuckDuckGo became the built-in engine in 1.1: move earlier installs over once.
+  if (state.settings.engineV !== 2) state.settings = { ...state.settings, engine: 'duck', engineV: 2 };
 }
 
 export const get = (key) => state[key];

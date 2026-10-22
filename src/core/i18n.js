@@ -1,6 +1,6 @@
 // نصوص الواجهة بالعربي والإنكليزي
 const ar = {
-  searchPlaceholder: 'ابحث أو اكتب عنوان موقع',
+  searchPlaceholder: 'ابحث بـ DuckDuckGo أو اكتب عنوان',
   back: 'رجوع', forward: 'تقدّم', reload: 'تحديث', stop: 'إيقاف', share: 'مشاركة', tabs: 'تبويبات', menu: 'القائمة',
   shield: 'الدرع', close: 'إغلاق', cancel: 'إلغاء', done: 'تم', clear: 'مسح', remove: 'حذف', removed: 'انحذف',
   undo: 'تراجع', copy: 'نسخ', copied: 'انسخ ✓', retry: 'حاول مرة ثانية', recent: 'زرتها مؤخراً',
@@ -38,7 +38,7 @@ const ar = {
 };
 
 const en = {
-  searchPlaceholder: 'Search or type a web address',
+  searchPlaceholder: 'Search DuckDuckGo or type an address',
   back: 'Back', forward: 'Forward', reload: 'Reload', stop: 'Stop', share: 'Share', tabs: 'Tabs', menu: 'Menu',
   shield: 'Shield', close: 'Close', cancel: 'Cancel', done: 'Done', clear: 'Clear', remove: 'Remove', removed: 'Removed',
   undo: 'Undo', copy: 'Copy', copied: 'Copied ✓', retry: 'Try again', recent: 'Recently visited',

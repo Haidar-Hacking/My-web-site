@@ -2,7 +2,7 @@
   "expo": {
     "name": "GB Browser",
     "slug": "gb-browser",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "orientation": "default",
     "icon": "./assets/icon.png",
     "scheme": "gbbrowser",
@@ -11,7 +11,9 @@
       "bundleIdentifier": "com.gbbrowser.app",
       "supportsTablet": true,
       "infoPlist": {
-        "NSAppTransportSecurity": { "NSAllowsArbitraryLoadsInWebContent": true },
+        "NSAppTransportSecurity": {
+          "NSAllowsArbitraryLoadsInWebContent": true
+        },
         "NSCameraUsageDescription": "Websites you open may ask to use the camera, for example for video calls.",
         "NSMicrophoneUsageDescription": "Websites you open may ask to use the microphone, for example for voice messages or calls.",
         "NSLocationWhenInUseUsageDescription": "Websites you open may ask for your location, for example maps.",
@@ -27,8 +29,18 @@
       "intentFilters": [
         {
           "action": "VIEW",
-          "category": ["BROWSABLE", "DEFAULT"],
-          "data": [{ "scheme": "http" }, { "scheme": "https" }]
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ],
+          "data": [
+            {
+              "scheme": "http"
+            },
+            {
+              "scheme": "https"
+            }
+          ]
         }
       ]
     },
@@ -48,7 +60,9 @@
       [
         "expo-build-properties",
         {
-          "android": { "usesCleartextTraffic": true }
+          "android": {
+            "usesCleartextTraffic": true
+          }
         }
       ]
     ]
