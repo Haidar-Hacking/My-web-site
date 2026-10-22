@@ -80,17 +80,14 @@ jobs:
           tap_text "إنشاء الحساب"
           sleep 8
           adb exec-out screencap -p > out/2-after-signup.png
-          tap_text "Wikipedia"
+          tap_text "Instagram"
           sleep 15
           adb exec-out screencap -p > out/3-after-tap-site.png
           front > out/front-after-site.txt
-          adb shell input keyevent 4; sleep 4
-          tap_text "Instagram"
-          sleep 15
-          adb exec-out screencap -p > out/3b-after-instagram.png
-          front > out/front-after-instagram.txt
+          adb shell input keyevent 4; sleep 5
+          adb exec-out screencap -p > out/3b-after-back.png
+          front > out/front-after-back.txt
           adb shell am start -n com.gbbrowser.app/.MainActivity; sleep 4
-          adb shell input keyevent 4; sleep 4
           tap_text "ابحث أو اكتب عنوان موقع"
           sleep 2
           adb shell input text "weather"

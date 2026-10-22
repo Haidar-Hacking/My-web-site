@@ -140,7 +140,7 @@ export default function StartPage({ tab, onOpen, onSearch }) {
           </Rise>
         ) : null}
 
-        <Rise i={3}>
+        <Rise i={3} style={st.searchWrap}>
           <Press onPress={onSearch} scaleTo={0.98} style={[st.search, { backgroundColor: c.dark ? 'rgba(255,255,255,0.14)' : c.surface, flexDirection: dir }]}>
             <Icon name="search" size={20} color={c.dark ? '#F4F6FC' : c.accent} />
             <Text style={[st.searchText, { color: c.dark ? 'rgba(244,246,252,0.72)' : c.faint, textAlign: rtl ? 'right' : 'left' }]} numberOfLines={1}>{t('searchPlaceholder')}</Text>
@@ -174,6 +174,7 @@ export default function StartPage({ tab, onOpen, onSearch }) {
 }
 
 const st = StyleSheet.create({
+  searchWrap: { alignSelf: 'stretch', alignItems: 'center' },
   scroll: { paddingHorizontal: 16, paddingBottom: 40, paddingTop: 10, alignItems: 'center' },
   weatherRow: { alignSelf: 'stretch', marginBottom: 8 },
   chip: { alignItems: 'center', gap: 8, paddingVertical: 8, paddingHorizontal: 12, borderRadius: 14, backgroundColor: 'rgba(255,255,255,0.12)' },
