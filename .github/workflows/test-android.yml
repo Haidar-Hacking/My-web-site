@@ -1,0 +1,120 @@
+# Installs the released APK on an Android emulator, signs up, opens a site and a search,
+# and saves screenshots plus the crash log to the "ci-logs" branch.
+name: Test APK on Android emulator
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag to test (for example v1.3.2)
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  emulator:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Download the APK
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release download "${{ inputs.tag }}" -R "${{ github.repository }}" -p GB-Browser.apk
+
+      - name: Write the test script
+        run: |
+          cat > run-test.sh <<'SH'
+          #!/bin/bash
+          set -x
+          mkdir -p out
+          adb install -r GB-Browser.apk
+          adb logcat -c
+          adb shell am start -n com.gbbrowser.app/.MainActivity
+          sleep 25
+          adb exec-out screencap -p > out/1-launch.png
+          tap_text() {
+            adb shell uiautomator dump /sdcard/ui.xml >/dev/null
+            adb pull /sdcard/ui.xml out/ui.xml >/dev/null
+            b=$(python3 - "$1" <<'PY'
+          import re, sys
+          xml = open('out/ui.xml', encoding='utf-8').read()
+          for node in re.findall(r'<node [^>]+>', xml):
+              t = re.search(r'text="([^"]*)"', node).group(1)
+              d = re.search(r'content-desc="([^"]*)"', node).group(1)
+              if sys.argv[1] in (t, d):
+                  x1, y1, x2, y2 = map(int, re.search(r'bounds="\[(\d+),(\d+)\]\[(\d+),(\d+)\]"', node).groups())
+                  print((x1 + x2) // 2, (y1 + y2) // 2); break
+          PY
+          )
+            echo "tap '$1' at: $b"
+            [ -n "$b" ] && adb shell input tap $b
+          }
+          fill_field() {
+            adb shell uiautomator dump /sdcard/ui.xml >/dev/null
+            adb pull /sdcard/ui.xml out/ui.xml >/dev/null
+            b=$(python3 - "$1" <<'PY'
+          import re, sys
+          xml = open('out/ui.xml', encoding='utf-8').read()
+          edits = [n for n in re.findall(r'<node [^>]+>', xml) if 'EditText' in n]
+          i = int(sys.argv[1])
+          if i < len(edits):
+              x1, y1, x2, y2 = map(int, re.search(r'bounds="\[(\d+),(\d+)\]\[(\d+),(\d+)\]"', edits[i]).groups())
+              print((x1 + x2) // 2, (y1 + y2) // 2)
+          PY
+          )
+            echo "field $1 at: $b"
+            [ -n "$b" ] && adb shell input tap $b && sleep 1 && adb shell input text "$2"
+          }
+          fill_field 0 Tester
+          fill_field 1 tester@example.com
+          fill_field 2 secret123
+          adb shell input keyevent 4
+          sleep 1
+          tap_text "إنشاء الحساب"
+          sleep 6
+          adb exec-out screencap -p > out/2-after-signup.png
+          tap_text "Wikipedia"
+          sleep 15
+          adb exec-out screencap -p > out/3-after-tap-site.png
+          adb shell pidof com.gbbrowser.app > out/alive-after-site.txt || echo "APP NOT RUNNING" > out/alive-after-site.txt
+          adb shell am start -n com.gbbrowser.app/.MainActivity
+          sleep 6
+          tap_text "ابحث أو اكتب عنوان موقع"
+          sleep 2
+          adb shell input text "weather"
+          adb shell input keyevent 66
+          sleep 15
+          adb exec-out screencap -p > out/4-after-search.png
+          adb shell pidof com.gbbrowser.app > out/alive-after-search.txt || echo "APP NOT RUNNING" > out/alive-after-search.txt
+          adb logcat -d > out/logcat-full.txt
+          grep -E "AndroidRuntime|ReactNativeJS|FATAL|ReactNative|Hermes|libc  |DEBUG   " out/logcat-full.txt | tail -400 > out/logcat-crash.txt || true
+          adb shell uiautomator dump /sdcard/ui.xml >/dev/null; adb pull /sdcard/ui.xml out/ui-final.xml >/dev/null
+          SH
+          chmod +x run-test.sh
+
+      - name: Run on the emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          target: google_apis
+          arch: x86_64
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          script: ./run-test.sh
+
+      - name: Save results to the ci-logs branch
+        if: always()
+        run: |
+          mkdir -p results && cp -r out/* results/ 2>/dev/null || true
+          cd results
+          git init -q -b ci-logs
+          git config user.name "gb-ci"; git config user.email "gb-ci@users.noreply.github.com"
+          git add -A && git commit -q -m "Emulator test for ${{ inputs.tag }}" || true
+          git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" ci-logs

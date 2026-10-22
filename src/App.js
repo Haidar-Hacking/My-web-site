@@ -21,6 +21,7 @@ import Library from './ui/Library';
 import MenuSheet from './ui/MenuSheet';
 import { FindBar, ShieldSheet } from './ui/PageTools';
 import AuthScreen from './ui/AuthScreen';
+import { CrashScreen, installCrashGuard } from './ui/Crash';
 import UpdateGate from './ui/UpdateGate';
 import { isSignedIn } from './core/account';
 import { forceSafeSearch, isAdult } from './core/safety';
@@ -32,6 +33,7 @@ import TabSwitcher from './ui/TabSwitcher';
 import { Ctx, Press, ToastHost, Txt, tap, toast } from './ui/kit';
 
 try { SplashScreen.preventAutoHideAsync(); } catch { /* already hidden */ }
+installCrashGuard();
 
 const START = 'gb://start';
 const KEEP_ALIVE = 5;
@@ -613,7 +615,9 @@ export default function App() {
   if (!ready) return <View style={{ flex: 1, backgroundColor: '#0F1840' }} />;
   return (
     <SafeAreaProvider>
-      <Browser />
+      <CrashScreen>
+        <Browser />
+      </CrashScreen>
     </SafeAreaProvider>
   );
 }

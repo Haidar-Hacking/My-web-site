@@ -2,7 +2,7 @@
   "expo": {
     "name": "GB Browser",
     "slug": "gb-browser",
-    "version": "1.3.1",
+    "version": "1.3.2",
     "orientation": "default",
     "icon": "./assets/icon.png",
     "scheme": "gbbrowser",
@@ -19,7 +19,7 @@
         "NSLocationWhenInUseUsageDescription": "Websites you open may ask for your location, for example maps.",
         "ITSAppUsesNonExemptEncryption": false
       },
-      "buildNumber": "10301"
+      "buildNumber": "10302"
     },
     "android": {
       "package": "com.gbbrowser.app",
@@ -44,7 +44,7 @@
           ]
         }
       ],
-      "versionCode": 10301,
+      "versionCode": 10302,
       "permissions": [
         "REQUEST_INSTALL_PACKAGES"
       ]
