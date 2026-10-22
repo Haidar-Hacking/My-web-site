@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import { Animated, PanResponder, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Icon } from '../core/icons';
-import { isInternal, prettyURL, siteOf } from '../core/logic';
+import { isInternal, prettyURL, searchQueryOf, siteOf } from '../core/logic';
 import { Press, useUI } from './kit';
 
 function Progress({ value, loading }) {
@@ -65,7 +65,8 @@ export default function BottomBar({ tab, tabCount, shieldOn, onAddress, onShield
   const insets = useSafeAreaInsets();
   const internal = isInternal(tab.url);
   const secure = /^https:/.test(tab.url);
-  const label = internal ? t('searchPlaceholder') : siteOf(tab.url) || prettyURL(tab.url);
+  const query = !internal && searchQueryOf(tab.url);
+  const label = internal ? t('searchPlaceholder') : query || siteOf(tab.url) || prettyURL(tab.url);
   const flip = dir === 'row-reverse' ? { transform: [{ scaleX: -1 }] } : null;
 
   return (
@@ -80,7 +81,7 @@ export default function BottomBar({ tab, tabCount, shieldOn, onAddress, onShield
           </Press>
         )}
         <Press onPress={onAddress} scaleTo={0.98} style={[st.addr, { flexDirection: dir }]}>
-          {!internal ? <Icon name={secure ? 'lock' : 'warn'} size={13} color={secure ? c.faint : c.danger} /> : null}
+          {query ? <Icon name="search" size={14} color={c.accent} /> : !internal ? <Icon name={secure ? 'lock' : 'warn'} size={13} color={secure ? c.faint : c.danger} /> : null}
           <Text numberOfLines={1} style={[st.addrText, { color: internal ? c.faint : c.text }]}>{label}</Text>
         </Press>
         {!internal ? (

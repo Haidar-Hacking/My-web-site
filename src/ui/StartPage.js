@@ -144,6 +144,7 @@ export default function StartPage({ tab, onOpen, onSearch }) {
           <Press onPress={onSearch} scaleTo={0.98} style={[st.search, { backgroundColor: c.dark ? 'rgba(255,255,255,0.14)' : c.surface, flexDirection: dir }]}>
             <Icon name="search" size={20} color={c.dark ? '#F4F6FC' : c.accent} />
             <Text style={[st.searchText, { color: c.dark ? 'rgba(244,246,252,0.72)' : c.faint, textAlign: rtl ? 'right' : 'left' }]} numberOfLines={1}>{t('searchPlaceholder')}</Text>
+            <Text style={[st.engine, { color: c.dark ? 'rgba(244,246,252,0.55)' : c.accent }]}>Go Browser</Text>
           </Press>
         </Rise>
 
@@ -191,6 +192,7 @@ const st = StyleSheet.create({
   wisdomText: { color: 'rgba(244,246,252,0.88)', fontSize: 14, flexShrink: 1, textAlign: 'center' },
   search: { width: '100%', maxWidth: 560, height: 52, borderRadius: 16, alignItems: 'center', gap: 12, paddingHorizontal: 16, shadowColor: '#050A1E', shadowOpacity: 0.3, shadowRadius: 14, shadowOffset: { width: 0, height: 8 }, elevation: 6 },
   searchText: { flex: 1, fontSize: 15.5 },
+  engine: { fontSize: 12, fontWeight: '800', letterSpacing: 0.2 },
   tiles: { flexWrap: 'wrap', justifyContent: 'center', marginTop: 26, alignSelf: 'center' },
   tile: { alignItems: 'center', paddingVertical: 8, gap: 8 },
   face: { width: 50, height: 50, borderRadius: 15, alignItems: 'center', justifyContent: 'center', shadowColor: '#050A1E', shadowOpacity: 0.25, shadowRadius: 8, shadowOffset: { width: 0, height: 4 }, elevation: 3 },

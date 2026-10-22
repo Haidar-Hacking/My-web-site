@@ -7,7 +7,7 @@ export const ENGINES = {
     suggest: (q) => `https://suggestqueries.google.com/complete/search?client=firefox&ie=utf-8&oe=utf-8&q=${encodeURIComponent(q)}`,
   },
   bing: { name: 'Bing', url: 'https://www.bing.com/search?q=%s', suggest: (q) => `https://api.bing.com/osjson.aspx?query=${encodeURIComponent(q)}` },
-  duck: { name: 'DuckDuckGo', url: 'https://duckduckgo.com/?q=%s&kp=1', suggest: (q) => `https://duckduckgo.com/ac/?type=list&kp=1&q=${encodeURIComponent(q)}` },
+  duck: { name: 'Go Browser', url: 'https://duckduckgo.com/?q=%s&kp=1', suggest: (q) => `https://duckduckgo.com/ac/?type=list&kp=1&q=${encodeURIComponent(q)}` },
   brave: { name: 'Brave Search', url: 'https://search.brave.com/search?q=%s', suggest: (q) => `https://search.brave.com/api/suggest?q=${encodeURIComponent(q)}` },
 };
 
@@ -15,7 +15,7 @@ export const KEYWORDS = [
   { keys: ['yt', 'يوتيوب'], name: 'YouTube', url: 'https://m.youtube.com/results?search_query=%s' },
   { keys: ['w', 'wiki', 'ويكي'], name: 'Wikipedia', url: 'https://{lang}.m.wikipedia.org/w/index.php?search=%s' },
   { keys: ['m', 'map', 'خريطة', 'خرائط'], name: 'Google Maps', url: 'https://www.google.com/maps/search/%s' },
-  { keys: ['img', 'صور'], name: 'DuckDuckGo Images', url: 'https://duckduckgo.com/?q=%s&iax=images&ia=images&kp=1' },
+  { keys: ['img', 'صور'], name: 'Go Browser صور', url: 'https://duckduckgo.com/?q=%s&iax=images&ia=images&kp=1' },
   { keys: ['tr', 'ترجم'], name: 'Google Translate', url: 'https://translate.google.com/?sl=auto&tl={lang}&text=%s&op=translate' },
   { keys: ['gh'], name: 'GitHub', url: 'https://github.com/search?q=%s' },
   { keys: ['x', 'tw'], name: 'X', url: 'https://x.com/search?q=%s' },
@@ -35,9 +35,27 @@ export function normalize(s) {
     .trim();
 }
 
-// DuckDuckGo is built in, with strict safe search always on.
+// Go Browser search: the app's own search engine. Results come from DuckDuckGo, styled in
+// GB colours through DuckDuckGo's public settings parameters, with strict safe search always on.
+// (DuckDuckGo asks apps to keep its header and ads, so those are left as they are.)
+const look = { dark: false, lang: 'ar' };
+export function setSearchLook(next) { Object.assign(look, next); }
+export const SEARCH_NAME = 'Go Browser';
 export function searchURL(q) {
-  return ENGINES.duck.url.replace('%s', encodeURIComponent(q));
+  const colors = look.dark
+    ? { kae: 'd', k7: '0f1528', k9: '8ea4ff', kx: '45c6a2', k8: 'a2accc', kaa: 'a68cff' }
+    : { kae: '-1', k7: 'f7f9fd', k9: '3456d1', kx: '1c7f66', k8: '56617f', kaa: '6a45d0' };
+  const params = { q, kp: '1', kl: look.lang === 'ar' ? 'xa-ar' : 'wt-wt', kaf: '1', ...colors, t: 'gobrowser' };
+  return 'https://duckduckgo.com/?' + Object.keys(params).map((k) => `${k}=${encodeURIComponent(params[k])}`).join('&');
+}
+
+// If this address is a Go Browser results page, returns the search words; otherwise ''.
+export function searchQueryOf(url) {
+  try {
+    const u = new URL(url);
+    if (u.hostname.replace(/^www\./, '') !== 'duckduckgo.com' || u.pathname !== '/') return '';
+    return u.searchParams.get('q') || '';
+  } catch { return ''; }
 }
 
 export function matchKeyword(raw, lang = 'ar') {

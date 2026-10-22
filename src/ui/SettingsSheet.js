@@ -111,7 +111,7 @@ export default function SettingsSheet({ visible, onClose }) {
         </Section>
 
         <Section title={t('set.search')}>
-          <Line icon="search" label="DuckDuckGo" sub={t('set.engineBuiltIn')}>
+          <Line icon="search" label="Go Browser" sub={t('set.engineBuiltIn')}>
             <Icon name="check" size={18} color={c.accent} strokeWidth={2.6} />
           </Line>
           <Line icon="shield" label={t('set.family')} sub={t('set.familySub')}>

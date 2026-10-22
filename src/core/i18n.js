@@ -34,7 +34,7 @@ const ar = {
   'set.suggestionsSub': 'تنطفي تلقائياً بالتبويب الخاص', 'set.privacy': 'الخصوصية والدرع', 'set.shield': 'درع الإعلانات والتتبّع',
   'set.popups': 'منع النوافذ المنبثقة', 'set.allowed': 'الدرع طافي لهذا الموقع', 'set.start': 'صفحة البداية',
   'set.weather': 'الطقس', 'set.city': 'المدينة', 'set.wisdom': 'حكمة اليوم', 'set.shortcuts': 'المواقع بصفحة البداية',
-  'set.account': 'الحساب', 'set.engineBuiltIn': 'محرك البحث المدمج، والبحث الآمن مفعّل دائماً',
+  'set.account': 'الحساب', 'set.engineBuiltIn': 'محرك البحث الخاص بالتطبيق، النتائج من DuckDuckGo والبحث الآمن دائماً',
   'set.family': 'حجب المواقع الإباحية', 'set.familySub': 'مفعّل دائماً لحماية التصفح',
   'adult.title': 'هذا الموقع محجوب', 'adult.text': 'GB Browser يحجب المواقع الإباحية حتى يبقى التصفح نظيف وآمن.', 'adult.back': 'رجوع',
   'auth.welcome': 'أهلاً بيك! سوّي حسابك حتى تبدي{0}', 'auth.welcomeBack': 'هلا بيك {0}', 'auth.register': 'إنشاء حساب', 'auth.login': 'تسجيل الدخول',
@@ -55,7 +55,7 @@ const ar = {
 };
 
 const en = {
-  searchPlaceholder: 'Search DuckDuckGo or type an address',
+  searchPlaceholder: 'Search Go Browser or type an address',
   back: 'Back', forward: 'Forward', reload: 'Reload', stop: 'Stop', share: 'Share', tabs: 'Tabs', menu: 'Menu',
   shield: 'Shield', close: 'Close', cancel: 'Cancel', done: 'Done', clear: 'Clear', remove: 'Remove', removed: 'Removed',
   undo: 'Undo', copy: 'Copy', copied: 'Copied ✓', retry: 'Try again', recent: 'Recently visited',
@@ -89,7 +89,7 @@ const en = {
   'set.suggestionsSub': 'Always off in private tabs', 'set.privacy': 'Privacy & shield', 'set.shield': 'Ad & tracker shield',
   'set.popups': 'Block pop-ups', 'set.allowed': 'Shield off for this site', 'set.start': 'Start page',
   'set.weather': 'Weather', 'set.city': 'City', 'set.wisdom': 'Saying of the day', 'set.shortcuts': 'Sites on the start page',
-  'set.account': 'Account', 'set.engineBuiltIn': 'Built-in search engine, safe search always on',
+  'set.account': 'Account', 'set.engineBuiltIn': 'The app’s own search engine; results from DuckDuckGo, safe search always on',
   'set.family': 'Adult sites blocked', 'set.familySub': 'Always on to keep browsing safe',
   'adult.title': 'This site is blocked', 'adult.text': 'GB Browser blocks adult sites to keep browsing clean and safe.', 'adult.back': 'Go back',
   'auth.welcome': 'Welcome! Create your account to start{0}', 'auth.welcomeBack': 'Welcome back {0}', 'auth.register': 'Create account', 'auth.login': 'Sign in',

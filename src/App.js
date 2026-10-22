@@ -11,7 +11,7 @@ import { WebView } from 'react-native-webview';
 import { AD_HOSTS } from './core/adhosts';
 import { Icon } from './core/icons';
 import { makeT } from './core/i18n';
-import { digits, formatNumber, isInternal, siteOf, uid } from './core/logic';
+import { digits, formatNumber, isInternal, setSearchLook, siteOf, uid } from './core/logic';
 import { PAGE_INFO, READER_SCRIPT, darkScript, findScript, shieldScript, textSizeScript } from './core/scripts';
 import { Bookmarks, History, ReadLater, addBlocked, get, loadStore, set, setSetting, useData } from './core/store';
 import { palette } from './core/theme';
@@ -188,6 +188,7 @@ function Browser() {
   const rtl = lang === 'ar';
   const nativeRTL = I18nManager.isRTL;
   const dark = settings.theme === 'dark' || (settings.theme === 'system' && scheme === 'dark');
+  setSearchLook({ dark, lang });
   const ui = useMemo(() => {
     const arabicDigits = rtl && settings.digits === 'arab';
     return {
