@@ -11,7 +11,16 @@ const ADULT_SITES = [
   'nuvid.com', 'sunporno.com', 'fuq.com', 'pornmd.com', 'porn300.com', 'xxxbunker.com', 'luxuretv.com', 'vporn.com',
   'faphouse.com', 'pornhubpremium.com', 'xnxx.tv', 'xvideos.es', 'aznude.com', 'porntube.com', 'fapster.xxx',
 ];
+import BIG_LIST from './adultlist';
+
 const SET = new Set(ADULT_SITES);
+let bigLoaded = false;
+// The big list is tens of thousands of domains, so it's turned into a set only when first needed.
+function loadBig() {
+  if (bigLoaded) return;
+  bigLoaded = true;
+  if (BIG_LIST) for (const h of BIG_LIST.split('\n')) if (h) SET.add(h);
+}
 // Words that only appear in adult site names (chosen to avoid places like Essex or Middlesex).
 const WORDS = /(porn|xxx|hentai|xvideo|xnxx|xhamster|redtube|youporn|brazzers|onlyfans|chaturbate|nsfw|camgirl|sexcam|livesex|fetish|milf|nude|nudes|erotic|escort)/;
 const ADULT_TLD = /\.(xxx|porn|sex|adult)$/;
@@ -20,6 +29,7 @@ export function isAdult(url) {
   let h = '';
   try { h = new URL(url).hostname.toLowerCase(); } catch { return false; }
   if (ADULT_TLD.test(h) || WORDS.test(h)) return true;
+  loadBig();
   while (h) {
     if (SET.has(h)) return true;
     const i = h.indexOf('.');

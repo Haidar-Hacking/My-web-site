@@ -32,6 +32,9 @@ jobs:
           npm install --no-audit --no-fund
           npx expo install react react-native react-native-webview @react-native-async-storage/async-storage react-native-svg react-native-safe-area-context expo-linear-gradient expo-haptics expo-clipboard expo-speech expo-status-bar expo-splash-screen expo-build-properties expo-file-system expo-intent-launcher expo-application expo-constants expo-crypto
 
+      - name: Build the adult-site blocklist
+        run: node tools/build-blocklist.js
+
       - name: Generate the Android project
         run: npx expo prebuild --platform android --no-install
 
