@@ -80,7 +80,8 @@ jobs:
           tap_text "إنشاء الحساب"
           sleep 8
           adb exec-out screencap -p > out/2-after-signup.png
-          tap_text "Instagram"
+          # The start page animates all the time, so uiautomator can't read it; tap by position instead.
+          adb shell input tap 51 457   # Instagram tile
           sleep 15
           adb exec-out screencap -p > out/3-after-tap-site.png
           front > out/front-after-site.txt
@@ -88,8 +89,10 @@ jobs:
           adb exec-out screencap -p > out/3b-after-back.png
           front > out/front-after-back.txt
           adb shell am start -n com.gbbrowser.app/.MainActivity; sleep 4
-          tap_text "ابحث أو اكتب عنوان موقع"
+          adb exec-out screencap -p > out/3c-relaunch.png
+          adb shell input tap 160 560   # address bar
           sleep 2
+          adb exec-out screencap -p > out/4a-overlay.png
           adb shell input text "weather"
           adb shell input keyevent 66
           sleep 15
