@@ -4,7 +4,11 @@ import { get, set } from './store';
 
 const hash = (salt, password) => Crypto.digestStringAsync(Crypto.CryptoDigestAlgorithm.SHA256, `${salt}:${password}`);
 export const hasAccount = () => !!get('account').hash;
-export const isSignedIn = () => hasAccount() && !!get('auth').in;
+export const isGuest = () => !!get('auth').guest && !hasAccount();
+export const isSignedIn = () => (hasAccount() && !!get('auth').in) || isGuest();
+// Using the browser without an account (App Store rule 5.1.1: sign-in can't be forced when the app works without it).
+export const continueAsGuest = () => set('auth', { in: false, guest: true });
+export const startSignUp = () => set('auth', { in: false, guest: false });
 const cleanEmail = (e) => String(e || '').trim().toLowerCase();
 
 export async function register({ name, email, password }) {
@@ -26,4 +30,5 @@ export async function signIn({ email, password }) {
 }
 
 export const signOut = () => set('auth', { in: false });
-export function deleteAccount() { set('account', {}); set('auth', { in: false }); }
+// Deletes the account from this device for good (App Store rule 5.1.1(v): accounts must be deletable in the app).
+export function deleteAccount() { set('account', {}); set('auth', { in: false, guest: false }); }

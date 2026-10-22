@@ -212,7 +212,8 @@ function Browser() {
   const signedIn = isSignedIn();
   const [update, setUpdate] = useState(null);
   useEffect(() => {
-    if (!signedIn) return undefined;
+    // iPhone apps may only update through the App Store (rule 2.5.2), so the in-app updater is Android-only.
+    if (!signedIn || Platform.OS === 'ios') return undefined;
     const check = () => checkForUpdate().then((u) => { if (u) setUpdate(u); }).catch(() => {});
     check();
     const sub = AppState.addEventListener('change', (s) => { if (s === 'active') check(); });
@@ -608,7 +609,7 @@ function Browser() {
         <MenuSheet visible={sheet === 'menu'} tab={active} onClose={() => setSheet(null)} act={act} />
         <ShieldSheet visible={sheet === 'shield'} tab={active} onClose={() => setSheet(null)} onSiteToggle={siteToggle} />
         <Library visible={sheet === 'library'} section={section} onClose={() => setSheet(null)} onOpen={(u) => go(u)} />
-        <SettingsSheet visible={sheet === 'settings'} onClose={() => setSheet(null)} />
+        <SettingsSheet visible={sheet === 'settings'} onClose={() => setSheet(null)} onOpen={(u) => go(u)} />
         <UpdateGate update={update} />
         <ReaderSheet article={article} onClose={() => setArticle(null)} onLink={(u) => go(u)} />
       </View>

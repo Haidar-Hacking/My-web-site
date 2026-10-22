@@ -5,7 +5,8 @@ import { Icon, Logo } from '../core/icons';
 import { ACCENTS } from '../core/theme';
 import { siteOf } from '../core/logic';
 import { History, set, setSetting, useData } from '../core/store';
-import { signOut } from '../core/account';
+import { deleteAccount, hasAccount, signOut, startSignUp } from '../core/account';
+import { PRIVACY_URL, SUPPORT_URL } from '../core/config';
 import { currentVersion } from '../core/updates';
 import { Press, Sheet, Txt, tap, toast, useUI } from './kit';
 
@@ -61,7 +62,7 @@ function Choice({ options, value, onChange }) {
   );
 }
 
-export default function SettingsSheet({ visible, onClose }) {
+export default function SettingsSheet({ visible, onClose, onOpen }) {
   const { c, t, lang, dir, rtl, num } = useUI();
   const settings = useData('settings');
   const stats = useData('stats');
@@ -80,11 +81,21 @@ export default function SettingsSheet({ visible, onClose }) {
     <Sheet visible={visible} onClose={onClose} full title={t('settings')}>
       <ScrollView style={{ flex: 1 }} contentContainerStyle={{ paddingBottom: 30 }} keyboardShouldPersistTaps="handled">
         <Section title={t('set.account')}>
-          <Line icon="user" label={account.name || '—'} sub={account.email} />
-          <Line icon="logout" label={t('auth.logout')} danger last onPress={() => Alert.alert(t('auth.logout'), t('auth.logoutQ'), [
-            { text: t('cancel'), style: 'cancel' },
-            { text: t('auth.logout'), style: 'destructive', onPress: () => { onClose(); signOut(); } },
-          ])} />
+          {hasAccount() ? (
+            <>
+              <Line icon="user" label={account.name || '—'} sub={account.email} />
+              <Line icon="logout" label={t('auth.logout')} onPress={() => Alert.alert(t('auth.logout'), t('auth.logoutQ'), [
+                { text: t('cancel'), style: 'cancel' },
+                { text: t('auth.logout'), style: 'destructive', onPress: () => { onClose(); signOut(); } },
+              ])} />
+              <Line icon="trash" label={t('auth.delete')} danger last onPress={() => Alert.alert(t('auth.delete'), t('auth.deleteQ'), [
+                { text: t('cancel'), style: 'cancel' },
+                { text: t('auth.deleteYes'), style: 'destructive', onPress: () => { onClose(); deleteAccount(); } },
+              ])} />
+            </>
+          ) : (
+            <Line icon="user" label={t('auth.guestNow')} sub={t('auth.guestSub')} last onPress={() => { onClose(); startSignUp(); }} />
+          )}
         </Section>
 
         <Section title={t('set.general')}>
@@ -164,6 +175,11 @@ export default function SettingsSheet({ visible, onClose }) {
 
         <Section title={t('set.other')}>
           <Line icon="volume" label={t('set.haptics')} last><Toggle k="haptics" settings={settings} /></Line>
+        </Section>
+
+        <Section title={t('set.about')}>
+          <Line icon="shield" label={t('privacy')} onPress={() => onOpen && onOpen(PRIVACY_URL)} />
+          <Line icon="info" label={t('support')} last onPress={() => onOpen && onOpen(SUPPORT_URL)} />
         </Section>
 
         <View style={st.about}>

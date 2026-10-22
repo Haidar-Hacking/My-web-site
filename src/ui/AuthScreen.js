@@ -1,10 +1,11 @@
 // شاشة الدخول: أول مرة تسوي حساب، وبعدها تدخل بالإيميل وكلمة السر
 import React, { useState } from 'react';
-import { Alert, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Alert, KeyboardAvoidingView, Linking, Platform, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Icon, Logo } from '../core/icons';
-import { deleteAccount, hasAccount, register, signIn } from '../core/account';
+import { continueAsGuest, deleteAccount, hasAccount, register, signIn } from '../core/account';
+import { PRIVACY_URL } from '../core/config';
 import { get } from '../core/store';
 import { Press, tap, useUI } from './kit';
 
@@ -81,7 +82,13 @@ export default function AuthScreen({ onDone }) {
               <Text style={[st.btnText, { color: c.accentInk }]}>{busy ? '…' : t(register_ ? 'auth.create' : 'auth.enter')}</Text>
             </Press>
             {register_ ? (
-              <Text style={[st.note, { color: c.faint }]}>{t('auth.localNote')}</Text>
+              <>
+                <Text style={[st.note, { color: c.faint }]}>{t('auth.localNote')}</Text>
+                {Platform.OS === 'ios' ? (
+                  <Press onPress={() => { continueAsGuest(); onDone(); }} style={st.link}><Text style={{ color: c.accent, fontWeight: '700', fontSize: 15 }}>{t('auth.guest')}</Text></Press>
+                ) : null}
+                <Press onPress={() => Linking.openURL(PRIVACY_URL).catch(() => {})} style={st.link}><Text style={{ color: c.faint, fontSize: 13, textDecorationLine: 'underline' }}>{t('privacy')}</Text></Press>
+              </>
             ) : (
               <Press onPress={forgot} style={st.link}><Text style={{ color: c.accent, fontWeight: '600', fontSize: 14 }}>{t('auth.forgot')}</Text></Press>
             )}
