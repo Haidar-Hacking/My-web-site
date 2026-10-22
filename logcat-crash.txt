@@ -1,0 +1,94 @@
+10-22 22:41:37.529  3396  3530 I ReactNativeJS: Running "main"
+10-22 22:41:40.331  3043  3081 W libc    : Access denied finding property "persist.adb.tls_server.enable"
+10-22 22:41:40.331  3043  3081 W libc    : Access denied finding property "service.adb.tls.port"
+10-22 22:41:40.792  1434  3402 W libc    : Access denied finding property "ro.hardware.chipname"
+10-22 22:41:43.030  3043  3081 W libc    : Access denied finding property "persist.adb.tls_server.enable"
+10-22 22:41:43.030  3043  3081 W libc    : Access denied finding property "service.adb.tls.port"
+10-22 22:41:44.030  3043  3081 W libc    : Access denied finding property "persist.adb.tls_server.enable"
+10-22 22:41:44.034  3043  3081 W libc    : Access denied finding property "service.adb.tls.port"
+10-22 22:41:44.328  1048  1395 W libc    : Access denied finding property "ro.vendor.aware_available"
+10-22 22:41:44.529  1048  1395 W libc    : Access denied finding property "ro.vendor.aware_available"
+10-22 22:41:44.589  1048  1395 W libc    : Access denied finding property "ro.vendor.aware_available"
+10-22 22:41:44.593  1048  1395 W libc    : Access denied finding property "ro.vendor.aware_available"
+10-22 22:41:44.647  1048  1395 W libc    : Access denied finding property "ro.vendor.aware_available"
+10-22 22:41:44.714  1048  1395 W libc    : Access denied finding property "ro.vendor.aware_available"
+10-22 22:41:44.794  1048  1395 W libc    : Access denied finding property "ro.vendor.aware_available"
+10-22 22:41:44.974  3043  3081 W libc    : Access denied finding property "persist.adb.tls_server.enable"
+10-22 22:41:44.975  3043  3081 W libc    : Access denied finding property "service.adb.tls.port"
+10-22 22:41:46.483  3043  3082 W libc    : Access denied finding property "persist.adb.tls_server.enable"
+10-22 22:41:46.483  3043  3082 W libc    : Access denied finding property "service.adb.tls.port"
+10-22 22:41:49.594  3043  3081 W libc    : Access denied finding property "persist.adb.tls_server.enable"
+10-22 22:41:49.599  3043  3081 W libc    : Access denied finding property "service.adb.tls.port"
+10-22 22:41:50.327  1434  4495 W libc    : Access denied finding property "ro.hardware.chipname"
+10-22 22:41:51.212  3043  3666 W libc    : Access denied finding property "persist.adb.tls_server.enable"
+10-22 22:41:51.212  3043  3666 W libc    : Access denied finding property "service.adb.tls.port"
+10-22 22:41:51.742  3043  3666 W libc    : Access denied finding property "persist.adb.tls_server.enable"
+10-22 22:41:51.742  3043  3666 W libc    : Access denied finding property "service.adb.tls.port"
+10-22 22:41:55.501  1048  4231 W libc    : Access denied finding property "ro.vendor.aware_available"
+10-22 22:41:55.510  1048  4231 W libc    : Access denied finding property "ro.vendor.aware_available"
+10-22 22:41:55.523  1048  4231 W libc    : Access denied finding property "ro.vendor.aware_available"
+10-22 22:41:58.731  1048  1080 W libc    : Access denied finding property "ro.vendor.aware_available"
+10-22 22:41:58.740  1048  4355 W libc    : Access denied finding property "ro.vendor.aware_available"
+10-22 22:41:58.757  1048  4355 W libc    : Access denied finding property "ro.vendor.aware_available"
+10-22 22:41:58.758  1048  4355 W libc    : Access denied finding property "ro.vendor.aware_available"
+10-22 22:41:58.760  1048  4355 W libc    : Access denied finding property "ro.vendor.aware_available"
+10-22 22:41:58.791  1048  4355 W libc    : Access denied finding property "ro.vendor.aware_available"
+10-22 22:41:58.803  1048  1080 W libc    : Access denied finding property "ro.vendor.aware_available"
+10-22 22:41:58.851  1048  1080 W libc    : Access denied finding property "ro.vendor.aware_available"
+10-22 22:41:58.870  1048  1080 W libc    : Access denied finding property "ro.vendor.aware_available"
+10-22 22:41:58.913  1048  4355 W libc    : Access denied finding property "ro.vendor.aware_available"
+10-22 22:41:58.923  1048  1080 W libc    : Access denied finding property "ro.vendor.aware_available"
+10-22 22:41:59.087  1048  1080 W libc    : Access denied finding property "ro.vendor.aware_available"
+10-22 22:41:59.273  1048  1080 W libc    : Access denied finding property "ro.vendor.aware_available"
+10-22 22:42:01.486  4926  4926 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-22 22:42:01.510  4926  4926 I AndroidRuntime: Using default boot image
+10-22 22:42:01.510  4926  4926 I AndroidRuntime: Leaving lock profiling enabled
+10-22 22:42:01.884  4926  4926 W libc    : Access denied finding property "ro.product.name_for_attestation"
+10-22 22:42:01.884  4926  4926 W libc    : Access denied finding property "ro.product.brand_for_attestation"
+10-22 22:42:01.884  4926  4926 W libc    : Access denied finding property "ro.product.model_for_attestation"
+10-22 22:42:01.889  4926  4926 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-22 22:42:03.008  4926  4926 D AndroidRuntime: Shutting down VM
+10-22 22:42:03.255  3043  3081 W libc    : Access denied finding property "persist.adb.tls_server.enable"
+10-22 22:42:03.256  3043  3081 W libc    : Access denied finding property "service.adb.tls.port"
+10-22 22:42:06.634  5163  5163 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-22 22:42:06.640  5163  5163 I AndroidRuntime: Using default boot image
+10-22 22:42:06.640  5163  5163 I AndroidRuntime: Leaving lock profiling enabled
+10-22 22:42:06.792  5163  5163 W libc    : Access denied finding property "ro.product.name_for_attestation"
+10-22 22:42:06.792  5163  5163 W libc    : Access denied finding property "ro.product.brand_for_attestation"
+10-22 22:42:06.792  5163  5163 W libc    : Access denied finding property "ro.product.model_for_attestation"
+10-22 22:42:06.793  5163  5163 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-22 22:42:07.864  5163  5163 D AndroidRuntime: Shutting down VM
+10-22 22:42:11.468  5241  5241 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-22 22:42:11.478  5241  5241 I AndroidRuntime: Using default boot image
+10-22 22:42:11.478  5241  5241 I AndroidRuntime: Leaving lock profiling enabled
+10-22 22:42:11.658  5241  5241 W libc    : Access denied finding property "ro.product.name_for_attestation"
+10-22 22:42:11.658  5241  5241 W libc    : Access denied finding property "ro.product.brand_for_attestation"
+10-22 22:42:11.658  5241  5241 W libc    : Access denied finding property "ro.product.model_for_attestation"
+10-22 22:42:11.659  5241  5241 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-22 22:42:12.400  3043  3081 W libc    : Access denied finding property "persist.adb.tls_server.enable"
+10-22 22:42:12.400  3043  3081 W libc    : Access denied finding property "service.adb.tls.port"
+10-22 22:42:12.732  5241  5241 D AndroidRuntime: Shutting down VM
+10-22 22:42:15.685  3043  3087 W libc    : Access denied finding property "persist.adb.tls_server.enable"
+10-22 22:42:15.685  3043  3087 W libc    : Access denied finding property "service.adb.tls.port"
+10-22 22:42:16.233  5409  5409 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-22 22:42:16.236  5409  5409 I AndroidRuntime: Using default boot image
+10-22 22:42:16.236  5409  5409 I AndroidRuntime: Leaving lock profiling enabled
+10-22 22:42:16.313  5409  5409 W libc    : Access denied finding property "ro.product.name_for_attestation"
+10-22 22:42:16.313  5409  5409 W libc    : Access denied finding property "ro.product.brand_for_attestation"
+10-22 22:42:16.313  5409  5409 W libc    : Access denied finding property "ro.product.model_for_attestation"
+10-22 22:42:16.314  5409  5409 D AndroidRuntime: Calling main entry com.android.commands.uiautomator.Launcher
+10-22 22:42:16.958  3043  3087 W libc    : Access denied finding property "persist.adb.tls_server.enable"
+10-22 22:42:16.962  3043  3087 W libc    : Access denied finding property "service.adb.tls.port"
+10-22 22:42:17.370  5409  5409 D AndroidRuntime: Shutting down VM
+10-22 22:42:17.567  5461  5532 W libc    : Access denied finding property "ro.hardware.chipname"
+10-22 22:42:18.298  3043  3087 W libc    : Access denied finding property "persist.adb.tls_server.enable"
+10-22 22:42:18.304  3043  3087 W libc    : Access denied finding property "service.adb.tls.port"
+10-22 22:42:18.626  3396  3530 I ReactNativeJNI: instanceHandle is null, event of type topBlur will be dropped
+10-22 22:42:20.534  3043  3087 W libc    : Access denied finding property "persist.adb.tls_server.enable"
+10-22 22:42:20.534  3043  3087 W libc    : Access denied finding property "service.adb.tls.port"
+10-22 22:42:31.608  3043  3666 W libc    : Access denied finding property "persist.adb.tls_server.enable"
+10-22 22:42:31.613  3043  3666 W libc    : Access denied finding property "service.adb.tls.port"
+10-22 22:42:31.637  5461  5547 W libc    : Access denied finding property "ro.hardware.chipname"
+10-22 22:42:32.126  3043  3666 W libc    : Access denied finding property "persist.adb.tls_server.enable"
+10-22 22:42:32.127  3043  3666 W libc    : Access denied finding property "service.adb.tls.port"
+10-22 22:42:53.931  3396  3530 I ReactNativeJNI: instanceHandle is null, event of type topBlur will be dropped

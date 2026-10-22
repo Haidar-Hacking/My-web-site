@@ -1,0 +1,1 @@
+    topResumedActivity=ActivityRecord{fee997f u0 com.gbbrowser.app/.MainActivity t8}
